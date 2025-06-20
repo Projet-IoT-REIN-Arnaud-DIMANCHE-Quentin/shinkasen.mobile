@@ -1,0 +1,1 @@
+export type Device = { id: string; status: string };

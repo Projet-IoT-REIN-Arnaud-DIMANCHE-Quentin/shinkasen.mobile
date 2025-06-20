@@ -1,43 +1,66 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
+import { Pressable, Text } from 'react-native';
 
-import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
+import { useAuth } from '@/hooks/useAuth';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { useRouter } from 'expo-router';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await logout();
+    router.replace('/auth/LoginScreen');
+  };
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute',
+        tabBarActiveTintColor: colorScheme === 'dark' ? '#38bdf8' : '#0ea5e9',
+        headerStyle: {
+          backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
+        },
+        headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
+        tabBarStyle: [
+          {
+            height: 60,
+            borderTopWidth: 0.5,
+            borderTopColor: colorScheme === 'dark' ? '#27272a' : '#e5e7eb',
+            backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
           },
-          default: {},
-        }),
+        ],
+        tabBarLabelStyle: {
+          fontSize: 12,
+          marginBottom: 6,
+        },
+        tabBarIconStyle: {
+          marginTop: 6,
+        },
       }}>
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Accueil',
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="house.fill" color={color} />,
+          headerShown: true,
+          headerRight: () => (
+            <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
+              <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black', fontSize: 16 }}>
+                Déconnexion
+              </Text>
+            </Pressable>
+          ),
         }}
       />
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Explorer',
+          tabBarIcon: ({ color }) => <IconSymbol size={26} name="paperplane.fill" color={color} />,
         }}
       />
     </Tabs>

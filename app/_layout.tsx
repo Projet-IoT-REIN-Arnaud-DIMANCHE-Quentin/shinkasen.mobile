@@ -1,29 +1,61 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { ActivityIndicator, View } from 'react-native';
 import 'react-native-reanimated';
 
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { useAuth } from '@/hooks/useAuth';
+import React, { useEffect, useState } from 'react';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
+  const [fontsLoaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
+  const { fetchUser, loading, user } = useAuth();
+  const [hasFetchedUser, setHasFetchedUser] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    const checkTokenAndFetchUser = async () => {
+      try {
+        const token = await AsyncStorage.getItem('jwt');
+        if (token && !user) {
+          await fetchUser();
+        }
+      } catch (e) {
+        console.error('Erreur lors de la récupération de l’utilisateur :', e);
+      } finally {
+        setHasFetchedUser(true);
+      }
+    };
+
+    checkTokenAndFetchUser();
+  }, []);
+
+  // Dès que l’état user est chargé et qu’il est null (non connecté), on redirige vers /auth
+  useEffect(() => {
+    if (hasFetchedUser && !loading && !user) {
+      router.replace("/auth/LoginScreen"); // redirection vers écran d'authentification
+    }
+  }, [hasFetchedUser, loading, user]);
+
+  if (!fontsLoaded || loading || !hasFetchedUser) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />
-    </ThemeProvider>
+    </>
   );
 }
