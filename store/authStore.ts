@@ -30,7 +30,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             const token = await AsyncStorage.getItem('jwt');
             set({ user, token, loading: false });
         } catch (e: any) {
-            set({ error: e, loading: false }); // <-- stocke l'objet erreur complet
+            set({ error: e, loading: false }); 
         }
     },
 
@@ -41,15 +41,15 @@ export const useAuthStore = create<AuthState>((set) => ({
             const token = await AsyncStorage.getItem('jwt');
             set({ user, token, loading: false });
         } catch (e: any) {
-            set({ error: e, loading: false }); // <-- stocke l'objet erreur complet
+            set({ error: e, loading: false }); 
         }
     },
 
     logout: async () => {
         set({ loading: true, error: null });
         try {
-            await AsyncStorage.removeItem('jwt');  // suppression du token local
-            await logoutUser(); // si logoutUser fait une requête serveur, ok
+            await AsyncStorage.removeItem('jwt'); 
+            await logoutUser(); 
             set({ user: null, token: null, loading: false });
         } catch (e) {
             set({ error: e, loading: false });

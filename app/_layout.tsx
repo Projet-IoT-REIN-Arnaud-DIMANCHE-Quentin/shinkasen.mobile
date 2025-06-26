@@ -6,7 +6,7 @@ import { ActivityIndicator, View } from 'react-native';
 import 'react-native-reanimated';
 
 import { useAuth } from '@/hooks/useAuth';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -14,34 +14,27 @@ export default function RootLayout() {
   });
 
   const { fetchUser, loading, user } = useAuth();
-  const [hasFetchedUser, setHasFetchedUser] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
-    const checkTokenAndFetchUser = async () => {
+    const bootstrapAuth = async () => {
       try {
         const token = await AsyncStorage.getItem('jwt');
         if (token && !user) {
           await fetchUser();
+        } else if (!token) {
+          router.replace('/auth/LoginScreen');
         }
-      } catch (e) {
-        console.error('Erreur lors de la récupération de l’utilisateur :', e);
-      } finally {
-        setHasFetchedUser(true);
+      } catch (error) {
+        console.error('Erreur de récupération du token :', error);
+        router.replace('/auth/LoginScreen');
       }
     };
 
-    checkTokenAndFetchUser();
+    bootstrapAuth();
   }, []);
 
-  // Dès que l’état user est chargé et qu’il est null (non connecté), on redirige vers /auth
-  useEffect(() => {
-    if (hasFetchedUser && !loading && !user) {
-      router.replace("/auth/LoginScreen"); // redirection vers écran d'authentification
-    }
-  }, [hasFetchedUser, loading, user]);
-
-  if (!fontsLoaded || loading || !hasFetchedUser) {
+  if (!fontsLoaded || loading) {
     return (
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size="large" />
@@ -51,8 +44,12 @@ export default function RootLayout() {
 
   return (
     <>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}
+      >
+        <Stack.Screen name="(tabs)" />
         <Stack.Screen name="+not-found" />
       </Stack>
       <StatusBar style="auto" />

@@ -2,10 +2,10 @@ import { Tabs } from 'expo-router';
 import React from 'react';
 import { Pressable, Text } from 'react-native';
 
-import { IconSymbol } from '@/components/ui/IconSymbol';
 import { useAuth } from '@/hooks/useAuth';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useRouter } from 'expo-router';
+import { Cpu, Home, Search } from 'lucide-react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -25,14 +25,12 @@ export default function TabLayout() {
           backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
         },
         headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
-        tabBarStyle: [
-          {
-            height: 60,
-            borderTopWidth: 0.5,
-            borderTopColor: colorScheme === 'dark' ? '#27272a' : '#e5e7eb',
-            backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
-          },
-        ],
+        tabBarStyle: {
+          height: 60,
+          borderTopWidth: 0.5,
+          borderTopColor: colorScheme === 'dark' ? '#27272a' : '#e5e7eb',
+          backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
+        },
         tabBarLabelStyle: {
           fontSize: 12,
           marginBottom: 6,
@@ -40,13 +38,13 @@ export default function TabLayout() {
         tabBarIconStyle: {
           marginTop: 6,
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Accueil',
-          tabBarIcon: ({ color }) => <IconSymbol size={26} name="house.fill" color={color} />,
-          headerShown: true,
+          tabBarIcon: ({ color }) => <Home size={24} color={color} />,
           headerRight: () => (
             <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
               <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black', fontSize: 16 }}>
@@ -60,7 +58,14 @@ export default function TabLayout() {
         name="explore"
         options={{
           title: 'Explorer',
-          tabBarIcon: ({ color }) => <IconSymbol size={26} name="paperplane.fill" color={color} />,
+          tabBarIcon: ({ color }) => <Search size={24} color={color} />,
+        }}
+      />
+      <Tabs.Screen
+        name="device"
+        options={{
+          title: 'Appareils',
+          tabBarIcon: ({ color }) => <Cpu size={24} color={color} />,
         }}
       />
     </Tabs>
