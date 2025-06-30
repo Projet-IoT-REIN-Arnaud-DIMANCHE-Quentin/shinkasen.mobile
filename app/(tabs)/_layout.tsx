@@ -5,7 +5,7 @@ import { Pressable, Text } from 'react-native';
 import { useAuth } from '@/hooks/useAuth';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { useRouter } from 'expo-router';
-import { Cpu, Home, Search } from 'lucide-react-native';
+import { Cpu } from 'lucide-react-native';
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
@@ -43,8 +43,8 @@ export default function TabLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Accueil',
-          tabBarIcon: ({ color }) => <Home size={24} color={color} />,
+          title: 'Appareils',
+          tabBarIcon: ({ color }) => <Cpu size={24} color={color} />,
           headerRight: () => (
             <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
               <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black', fontSize: 16 }}>
@@ -52,20 +52,6 @@ export default function TabLayout() {
               </Text>
             </Pressable>
           ),
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explorer',
-          tabBarIcon: ({ color }) => <Search size={24} color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="device"
-        options={{
-          title: 'Appareils',
-          tabBarIcon: ({ color }) => <Cpu size={24} color={color} />,
         }}
       />
     </Tabs>

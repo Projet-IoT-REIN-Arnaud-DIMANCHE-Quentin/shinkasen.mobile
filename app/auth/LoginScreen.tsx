@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { Alert, Text, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
 import InputField from "@/components/form/InputField";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { Text, TouchableOpacity } from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -12,6 +12,8 @@ export default function LoginScreen() {
   const { login, loading, error, user } = useAuth();
 
   const handleLogin = async () => {
+    if (!email.trim() || !password.trim()) return; 
+
     try {
       await login(email, password);
     } catch (e: any) {
@@ -34,7 +36,7 @@ export default function LoginScreen() {
       if (error?.body) {
         message += `\nDétails: ${JSON.stringify(error.body)}`;
       }
-      Alert.alert("Erreur de connexion", message);
+      // Alert.alert("Erreur de connexion", message);
     }
   }, [error]);
 

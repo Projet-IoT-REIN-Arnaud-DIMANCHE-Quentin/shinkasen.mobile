@@ -23,35 +23,55 @@ export const useAuthStore = create<AuthState>((set) => ({
     loading: false,
     error: null,
 
-    login: async (email, password) => {
-        set({ loading: true, error: null });
-        try {
-            const user = await loginUser(email, password);
-            const token = await AsyncStorage.getItem('jwt');
-            set({ user, token, loading: false });
-        } catch (e: any) {
-            set({ error: e, loading: false }); 
-        }
-    },
-
     register: async (email, password) => {
         set({ loading: true, error: null });
         try {
             const user = await registerUser(email, password);
             const token = await AsyncStorage.getItem('jwt');
+
+            if (!user || !token) {
+                throw new Error('Inscription invalide.');
+            }
+
+            console.log('[AUTH] Inscription réussie');
             set({ user, token, loading: false });
         } catch (e: any) {
-            set({ error: e, loading: false }); 
+            console.error('[AUTH] Erreur register :', e?.message || e);
+            await AsyncStorage.removeItem('jwt');
+            set({ error: e, loading: false }); // Ne pas rediriger ici
+            throw e;
+        }
+    },
+
+    login: async (email, password) => {
+        set({ loading: true, error: null });
+        try {
+            const user = await loginUser(email, password);
+            const token = await AsyncStorage.getItem('jwt');
+
+            if (!user || !token) {
+                throw new Error('Connexion échouée.');
+            }
+
+            console.log('[AUTH] Connexion réussie');
+            set({ user, token, loading: false });
+        } catch (e: any) {
+            console.error('[AUTH] Erreur login :', e?.message || e);
+            await AsyncStorage.removeItem('jwt');
+            set({ error: e, user: null, token: null, loading: false });
+            throw e;
         }
     },
 
     logout: async () => {
         set({ loading: true, error: null });
         try {
-            await AsyncStorage.removeItem('jwt'); 
-            await logoutUser(); 
+            await AsyncStorage.removeItem('jwt');
+            await logoutUser();
+            console.log('[AUTH] Déconnexion réussie');
             set({ user: null, token: null, loading: false });
         } catch (e) {
+            console.error('[AUTH] Erreur logout :', e);
             set({ error: e, loading: false });
         }
     },
@@ -61,9 +81,18 @@ export const useAuthStore = create<AuthState>((set) => ({
         try {
             const user = await getCurrentUser();
             const token = await AsyncStorage.getItem('jwt');
+
+            if (!user || !token) {
+                throw new Error('Utilisateur introuvable');
+            }
+
+            console.log('[AUTH] Utilisateur récupéré');
             set({ user, token, loading: false });
-        } catch (e: any) {
+        } catch (e) {
+            console.error('[AUTH] Erreur fetchUser :', e);
+            await AsyncStorage.removeItem('jwt');
             set({ user: null, token: null, loading: false });
+            throw e;
         }
     },
 }));
