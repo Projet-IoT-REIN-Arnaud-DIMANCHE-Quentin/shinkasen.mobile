@@ -3,7 +3,7 @@ import Button from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Alert, Text, TouchableOpacity, View } from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -12,12 +12,11 @@ export default function LoginScreen() {
   const { login, loading, error, user } = useAuth();
 
   const handleLogin = async () => {
-    if (!email.trim() || !password.trim()) return; 
-
+    if (!email.trim() || !password.trim()) return;
     try {
       await login(email, password);
-    } catch (e: any) {
-      // L'erreur est déjà gérée par le store
+    } catch {
+      // handled in store
     }
   };
 
@@ -36,36 +35,42 @@ export default function LoginScreen() {
       if (error?.body) {
         message += `\nDétails: ${JSON.stringify(error.body)}`;
       }
-      // Alert.alert("Erreur de connexion", message);
+      Alert.alert("Erreur de connexion", message);
     }
   }, [error]);
 
   const goToRegister = () => router.push("/auth/RegisterScreen");
 
   return (
-    <>
-      <Text className="text-3xl font-bold text-center mb-8 text-text">
-        Connexion
-      </Text>
-      <InputField
-        label="Email"
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        keyboardType="email-address"
-        placeholder="Entrez votre email"
-      />
-      <InputField
-        label="Mot de passe"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        placeholder="Entrez votre mot de passe"
-      />
-      <Button title="Se connecter" onPress={handleLogin} loading={loading} />
-      <TouchableOpacity onPress={goToRegister} className="mt-6 items-center">
-        <Text className="text-blue-600 underline text-base">Pas encore de compte ? S'inscrire</Text>
-      </TouchableOpacity>
-    </>
+    <View className="flex-1 justify-center bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 px-4">
+      <View className="w-full max-w-md mx-auto rounded-3xl bg-white/90 dark:bg-zinc-900/90 p-8 shadow-2xl space-y-6">
+        <Text className="text-3xl font-bold text-center text-black dark:text-white">Connexion</Text>
+
+        <InputField
+          label="Email"
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          placeholder="Entrez votre email"
+        />
+
+        <InputField
+          label="Mot de passe"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholder="Entrez votre mot de passe"
+        />
+
+        <Button title="Se connecter" onPress={handleLogin} loading={loading} />
+
+        <TouchableOpacity onPress={goToRegister}>
+          <Text className="text-center text-base text-indigo-600 font-medium">
+            Pas encore de compte ? S'inscrire
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }

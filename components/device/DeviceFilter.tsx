@@ -19,13 +19,15 @@ export const DeviceFilterBar: React.FC<Props> = ({ current, onChange }) => {
                 <Pressable
                     key={f.value}
                     onPress={() => onChange(f.value as 'all' | 'online' | 'offline')}
-                    className={`px-4 py-2 rounded-full ${current === f.value
-                            ? 'bg-blue-600'
-                            : 'bg-gray-200 dark:bg-zinc-700'
+                    className={`px-5 py-2 rounded-full ${current === f.value
+                            ? 'bg-violet-600'
+                            : 'bg-zinc-200 dark:bg-zinc-700'
                         }`}
                 >
                     <Text
-                        className={`text-sm font-medium ${current === f.value ? 'text-white' : 'text-black dark:text-white'
+                        className={`text-sm font-semibold ${current === f.value
+                                ? 'text-white'
+                                : 'text-zinc-900 dark:text-white'
                             }`}
                     >
                         {f.label}

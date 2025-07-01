@@ -20,16 +20,22 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: colorScheme === 'dark' ? '#38bdf8' : '#0ea5e9',
+        tabBarActiveTintColor: '#8b5cf6',
+        tabBarInactiveTintColor: '#a1a1aa', 
         headerStyle: {
-          backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
+          backgroundColor: colorScheme === 'dark' ? '#0c0a09' : '#fafafa',
         },
-        headerTintColor: colorScheme === 'dark' ? '#fff' : '#000',
+        headerTitleStyle: {
+          fontSize: 20,
+          fontWeight: '700',
+          color: colorScheme === 'dark' ? '#ffffff' : '#111827',
+        },
+        headerTintColor: colorScheme === 'dark' ? '#ffffff' : '#111827',
         tabBarStyle: {
-          height: 60,
+          height: 65,
           borderTopWidth: 0.5,
           borderTopColor: colorScheme === 'dark' ? '#27272a' : '#e5e7eb',
-          backgroundColor: colorScheme === 'dark' ? '#18181b' : '#fafafa',
+          backgroundColor: colorScheme === 'dark' ? '#0c0a09' : '#ffffff',
         },
         tabBarLabelStyle: {
           fontSize: 12,
@@ -44,10 +50,13 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Appareils',
-          tabBarIcon: ({ color }) => <Cpu size={24} color={color} />,
+          tabBarIcon: ({ color }: { color: string }) => <Cpu size={24} color={color} />,
           headerRight: () => (
-            <Pressable onPress={handleLogout} style={{ marginRight: 15 }}>
-              <Text style={{ color: colorScheme === 'dark' ? 'white' : 'black', fontSize: 16 }}>
+            <Pressable
+              onPress={handleLogout}
+              className="mr-4 px-3 py-1 rounded-full bg-zinc-100 dark:bg-zinc-800 active:opacity-80"
+            >
+              <Text className="text-sm font-medium text-black dark:text-white">
                 Déconnexion
               </Text>
             </Pressable>

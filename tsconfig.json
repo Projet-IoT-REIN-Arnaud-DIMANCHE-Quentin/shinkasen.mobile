@@ -4,6 +4,8 @@
     "strict": true,
     "esModuleInterop": true,
     "jsx": "react-native",
+    "allowJs": true,
+    "moduleResolution": "node",
     "paths": {
       "@/*": [
         "./*"

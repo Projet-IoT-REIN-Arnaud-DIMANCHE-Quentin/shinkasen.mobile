@@ -11,10 +11,14 @@ type Props = {
 export default function Button({ title, onPress, loading, disabled }: Props) {
   return (
     <TouchableOpacity
-      className={`rounded-lg py-4 mt-4 items-center ${disabled ? "bg-primaryLight" : "bg-primary"}`}
+      className={`rounded-xl py-4 mt-4 items-center w-full ${
+        disabled ? "bg-primaryLight" : "bg-primary"
+      } active:opacity-80 transition-opacity`}
       onPress={onPress}
       disabled={loading || disabled}
-      activeOpacity={0.8}
+      accessibilityRole="button"
+      accessibilityLabel={title}
+      activeOpacity={0.85}
     >
       {loading ? (
         <ActivityIndicator color="#fff" />

@@ -30,13 +30,13 @@ export const DeviceFilterModal: React.FC<Props> = ({
                         onSelect(opt.value);
                         onClose();
                     }}
-                    className={`py-3 px-2 rounded-lg ${current === opt.value
-                            ? 'bg-blue-600'
-                            : 'bg-gray-100 dark:bg-zinc-700'
-                        } mb-2`}
+                    className={`py-3 px-4 rounded-xl mb-2 ${current === opt.value
+                            ? 'bg-violet-600'
+                            : 'bg-zinc-100 dark:bg-zinc-700'
+                        }`}
                 >
                     <Text
-                        className={`text-center font-medium ${current === opt.value ? 'text-white' : 'text-black dark:text-white'
+                        className={`text-center font-semibold ${current === opt.value ? 'text-white' : 'text-zinc-900 dark:text-white'
                             }`}
                     >
                         {opt.label}

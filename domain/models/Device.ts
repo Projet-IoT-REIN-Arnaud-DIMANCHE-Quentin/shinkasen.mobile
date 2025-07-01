@@ -1,9 +1,8 @@
-type DeviceStatus = 'online' | 'offline' | 'error';
+import { GpsData } from './GpsData';
 
-type Device = {
+export type Device = {
     id: string;
     name: string;
-    status: DeviceStatus;
+    status: 'online' | 'offline';
+    lastLocation?: GpsData;
 };
-
-export { Device, DeviceStatus };

@@ -9,14 +9,16 @@ type Props = TextInputProps & {
 export default function InputField({ label, error, ...props }: Props) {
   return (
     <View className="mb-4">
-      <Text className="text-base mb-2 text-label">{label}</Text>
+      <Text className="text-base mb-2 text-label font-semibold">{label}</Text>
       <TextInput
         className={[
-          "rounded-lg px-3 py-3 bg-white text-base text-text",
-          error ? "border-red-500" : "border-gray-300",
-          "border",
+          "rounded-xl px-4 py-3 bg-white dark:bg-zinc-800 text-base text-white border",
+          error ? "border-red-500 focus:border-red-600" : "border-gray-300 focus:border-primary",
+          "transition-colors duration-150",
         ].join(" ")}
         placeholderTextColor="#aaa"
+        accessibilityLabel={label}
+        accessible
         {...props}
       />
       {error ? (

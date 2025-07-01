@@ -1,64 +1,54 @@
 import { DeviceActions } from '@/components/device/DeviceActions';
 import { DeviceInfo } from '@/components/device/DeviceInfo';
-import { GpsHistoryList } from '@/components/device/Gps/GpsHistoryList';
-import { Device } from '@/domain/models/Device';
-import { useLocalSearchParams, useNavigation } from 'expo-router';
-import { ArrowLeft } from 'lucide-react-native'; 
-import React, { useLayoutEffect } from 'react';
-import { ActivityIndicator, Pressable, View } from 'react-native';
+import { useGpsDataByImei } from '@/hooks/useGpsDataByImei';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import { ArrowLeft } from 'lucide-react-native';
+import React from 'react';
+import { ActivityIndicator, Pressable, Text, View } from 'react-native';
 
-export default function DeviceDetailScreen() {
-    const { imei } = useLocalSearchParams<{ imei: string }>();
-    const navigation = useNavigation();
+export default function DeviceScreen() {
+  const { imei } = useLocalSearchParams();
+  const { data, loading, error } = useGpsDataByImei(String(imei));
+  const router = useRouter();
 
-    const device: Device | undefined = {
-        id: imei!,
-        name: `Appareil ${imei}`,
-        status: 'online',
-    };
+  if (loading) {
+    return <ActivityIndicator className="mt-10" />;
+  }
 
-    // Simule des données de tracking
-    const gpsHistory = [
-        {
-            id: '1',
-            date: '2025-06-25 10:32',
-            latitude: 50.6333,
-            longitude: 3.0667,
-        },
-        {
-            id: '2',
-            date: '2025-06-24 18:20',
-            latitude: 50.6378,
-            longitude: 3.0583,
-        },
-    ];
-
-
-    useLayoutEffect(() => {
-        navigation.setOptions({
-            title: 'Détails de l’appareil',
-            headerShown: true,
-            headerLeft: () => (
-                <Pressable onPress={() => navigation.goBack()} className="ml-4">
-                    <ArrowLeft size={24} color="black" />
-                </Pressable>
-            ),
-        });
-    }, [navigation]);
-
-    if (!device) {
-        return (
-            <View className="flex-1 justify-center items-center bg-white dark:bg-black">
-                <ActivityIndicator size="large" />
-            </View>
-        );
-    }
-
+  if (error) {
     return (
-        <View className="flex-1 justify-center items-center bg-white dark:bg-black px-4">
-            <DeviceInfo {...device} />
-            <DeviceActions deviceId={device.id} />
-            <GpsHistoryList history={gpsHistory} />
-        </View>
+      <Text className="text-red-500 text-center mt-10">
+        {error.message}
+      </Text>
     );
+  }
+
+  if (!data || data.length === 0) {
+    return (
+      <Text className="text-gray-400 text-center mt-10">
+        Aucune coordonnée trouvée
+      </Text>
+    );
+  }
+
+  const lastPoint = data[0];
+
+  return (
+    <View className="flex-1 px-4 py-6 bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 dark:from-zinc-900 dark:via-zinc-900 dark:to-zinc-900">
+      <Pressable onPress={() => router.back()} className="mb-4 flex-row items-center">
+        <ArrowLeft size={20} color="#7c3aed" />
+        <Text className="ml-2 text-violet-700 dark:text-violet-400 font-medium">Retour</Text>
+      </Pressable>
+
+      <View className="bg-white dark:bg-zinc-800 rounded-3xl p-4 shadow-lg">
+        <DeviceInfo id={String(imei)} name={`Appareil ${imei}`} status="online" />
+
+        <Text className="text-center text-sm text-gray-500 dark:text-gray-400 mt-4">
+          Dernière position reçue : {new Date(lastPoint.updatedAt).toLocaleString()}
+        </Text>
+
+        <DeviceActions deviceId={String(imei)} />
+      </View>
+    </View>
+  );
 }
