@@ -1,8 +1,8 @@
 import { GpsData } from './GpsData';
 
-export type Device = {
+export interface Device {
     id: string;
     name: string;
-    status: 'online' | 'offline';
+    state: 'on' | 'off'; // Au lieu de 'online' | 'offline'
     lastLocation?: GpsData;
-};
+}
