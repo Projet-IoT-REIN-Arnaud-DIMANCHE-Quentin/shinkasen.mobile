@@ -7,9 +7,9 @@ export const useGpsDataByImei = (imei: string) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
-    const fetchGpsData = async () => {
+    const fetchGpsData = async (showLoader = true) => {
         if (!imei) return;
-        setLoading(true);
+        if (showLoader) setLoading(true);
         setError(null);
 
         try {
@@ -21,7 +21,7 @@ export const useGpsDataByImei = (imei: string) => {
         } catch (err: any) {
             setError(err);
         } finally {
-            setLoading(false);
+            if (showLoader) setLoading(false);
         }
     };
 
@@ -29,6 +29,12 @@ export const useGpsDataByImei = (imei: string) => {
         fetchGpsData();
     }, [imei]);
 
-    // ✅ Ajoute refetch ici
-    return { data, loading, error, refetch: fetchGpsData };
+    return {
+        data,
+        loading,
+        error,
+        refetch: () => fetchGpsData(true),          // ancien refetch avec loader
+        refreshSilently: () => fetchGpsData(false)  // ✅ nouveau sans loader
+    };
 };
+

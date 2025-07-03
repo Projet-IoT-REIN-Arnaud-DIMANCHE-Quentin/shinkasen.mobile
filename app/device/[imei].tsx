@@ -8,7 +8,7 @@ import { ActivityIndicator, Pressable, ScrollView, Text, View } from 'react-nati
 
 export default function DeviceScreen() {
   const { imei } = useLocalSearchParams();
-  const { data, loading, error, refetch } = useGpsDataByImei(String(imei));
+  const { data, loading, error, refreshSilently } = useGpsDataByImei(String(imei));
   const router = useRouter();
   const [currentConfig, setCurrentConfig] = useState<any>(null);
 
@@ -64,7 +64,7 @@ export default function DeviceScreen() {
             latitude: lastPoint.latitude,
             longitude: lastPoint.longitude
           }}
-          onRefresh={refetch}
+          onRefresh={refreshSilently}
           currentConfig={currentConfig}
           onConfigUpdate={setCurrentConfig}
         />
