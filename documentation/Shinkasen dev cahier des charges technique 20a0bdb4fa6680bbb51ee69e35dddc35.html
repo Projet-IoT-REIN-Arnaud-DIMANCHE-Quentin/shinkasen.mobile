@@ -1,0 +1,778 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Shinkasen.dev cahier des charges technique</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: undefined; }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-translucentGray { background-color: undefined; }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="20a0bdb4-fa66-80bb-b51e-e69e35dddc35" class="page sans"><header><h1 class="page-title"><a href="http://Shinkasen.dev">Shinkasen.dev</a> cahier des charges technique</h1><p class="page-description"></p></header><div class="page-body"><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Introduction</summary><div class="indented"><h3 id="20a0bdb4-fa66-801b-927e-f9745982a122" class="">📌 <strong>Contexte du projet</strong></h3><blockquote id="20a0bdb4-fa66-8019-a87e-e86e44d9826a" class="">« Dans un contexte de mobilité croissante et d&#x27;événements majeurs, la sécurisation des documents sensibles devient primordiale. Shinkasen.dev développe une solution innovante de traçabilité en temps réel, permettant aux entreprises et aux particuliers de suivre et protéger efficacement leurs biens de valeur. »</blockquote><figure id="20a0bdb4-fa66-80ab-8664-cf426a3b7bae" class="image"><a href="https://images.unsplash.com/photo-1670888616597-53457e54b61b?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb"><img src="https://images.unsplash.com/photo-1670888616597-53457e54b61b?ixlib=rb-4.1.0&amp;q=85&amp;fm=jpg&amp;crop=entropy&amp;cs=srgb"/></a></figure><p id="20a0bdb4-fa66-80ed-a71f-cbbf458fbc76" class=""> </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20a0bdb4-fa66-8090-bd64-eef51381899b" class="code"><code class="language-Mermaid">timeline
+    title Suivi d&#x27;une valise perdue avec Shinkasen.dev
+
+    2025-06-01 : 📦 Perte de la valise
+    2025-06-01 : 📡 Activation du dispositif GNSS/4G
+    2025-06-01 : 📍 Traçage via ESP32 + SIM7080G
+    2025-06-01 : 🛰️ Transmission CBOR vers serveur TCP
+    2025-06-01 : 🧠 Traitement + mise en cache API
+    2025-06-01 : 🗺️ Affichage sur Mapbox (React)
+    2025-06-01 : 🔔 Notification utilisateur (React/UI)
+    2025-06-01 : 🔐 Sécurité retrouvée + historique disponible
+</code></pre><p id="20a0bdb4-fa66-802d-a635-c32d0d57ac0c" class="">
+</p><h3 id="20a0bdb4-fa66-8036-a078-f1a08ade4b31" class="">🎯 <strong>Objectifs du projet</strong></h3><ul id="20a0bdb4-fa66-8002-abe2-fa751cc6b809" class="bulleted-list"><li style="list-style-type:disc">Suivre en temps réel des valises avec une précision de 10 mètres.</li></ul><ul id="20a0bdb4-fa66-808f-9710-e67276caf2ca" class="bulleted-list"><li style="list-style-type:disc">Moduler la fréquence d’envoi des données en fonction des besoins.</li></ul><ul id="20a0bdb4-fa66-80cb-8c9a-f0f52977696a" class="bulleted-list"><li style="list-style-type:disc">Proposer dans le futur une plateforme B2C et B2B avec des tableaux de bord adaptés.</li></ul><ul id="20a0bdb4-fa66-8003-b1cf-e18dbb22b5f6" class="bulleted-list"><li style="list-style-type:disc"><strong>Scalabilité</strong> : L&#x27;architecture du projet est conçue pour gérer une montée en charge progressive. Le système sera capable de traiter efficacement un nombre croissant de valises connectées, en adaptant ses ressources (serveurs, base de données, cache) selon la demande. </li></ul><p id="20a0bdb4-fa66-8055-9d68-e37314d257e9" class="">
+</p><hr id="20a0bdb4-fa66-805a-9806-c2ef29f30869"/><h3 id="20a0bdb4-fa66-801d-a907-c77f7e673cda" class="">🗺️ <strong>Portée du projet</strong></h3><blockquote id="20a0bdb4-fa66-80a4-bfdc-c94359cb6383" class="">Le projet couvre l’ensemble du territoire français, en ciblant :<ul id="20a0bdb4-fa66-80c3-a0cc-c706990218c8" class="bulleted-list"><li style="list-style-type:disc">Les <strong>particuliers</strong> transportant objets sensibles</li></ul><ul id="20a0bdb4-fa66-80c9-9fb0-ea3008792fc8" class="bulleted-list"><li style="list-style-type:disc">Les <strong>entreprises</strong> équipant leurs employés en déplacement<p id="20a0bdb4-fa66-8076-b268-cac9afce26b8" class="">Il pourra évoluer vers d’autres pays selon les contraintes techniques et réglementaires.</p></li></ul></blockquote></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Glossaire</summary><div class="indented"><table id="20a0bdb4-fa66-80a5-8dba-d3ae6d7afa22" class="simple-table"><tbody><tr id="20a0bdb4-fa66-8030-91d3-ed6a7a5dea8d"><td id="OFWA" class="">Terme / Acronyme</td><td id="dWYB" class="">Définition</td></tr><tr id="20a0bdb4-fa66-80bd-9f5a-cead6d043499"><td id="OFWA" class=""><strong>ESP32</strong></td><td id="dWYB" class="">Microcontrôleur Wi-Fi/BT développé par Espressif, utilisé ici pour piloter le GNSS et le modem 4G.</td></tr><tr id="20a0bdb4-fa66-806b-ad58-d14b00bfce38"><td id="OFWA" class=""><strong>SIM7080G</strong></td><td id="dWYB" class="">Module cellulaire 4G (CAT-M1 / NB-IoT / GPRS) permettant la communication via AT Commands.</td></tr><tr id="20a0bdb4-fa66-8065-b060-c607a87d5836"><td id="OFWA" class=""><strong>GNSS</strong></td><td id="dWYB" class="">Global Navigation Satellite System : ensemble de systèmes de positionnement (GPS, Galileo, etc.).</td></tr><tr id="20a0bdb4-fa66-8017-8f64-ec8569386482"><td id="OFWA" class=""><strong>AT Commandes</strong></td><td id="dWYB" class="">Jeu d&#x27;instructions textuelles envoyées au module SIM pour le configurer ou envoyer des données.</td></tr><tr id="20a0bdb4-fa66-809f-a97e-ff9d2898d9c7"><td id="OFWA" class=""><strong>CBOR</strong></td><td id="dWYB" class="">Concise Binary Object Representation : format binaire compact pour représenter des objets JSON.</td></tr><tr id="20a0bdb4-fa66-803b-bdb2-d8564768e5d0"><td id="OFWA" class=""><strong>Server TCP (Node.js)</strong></td><td id="dWYB" class="">Serveur basé sur le module <code>net</code> de Node.js, capable de recevoir les connexions binaires entrantes.</td></tr><tr id="20a0bdb4-fa66-802b-8e65-f721a49355bc"><td id="OFWA" class=""><strong>API Express</strong></td><td id="dWYB" class="">Backend RESTful utilisant Express.js pour exposer des endpoints vers l’interface web React.</td></tr><tr id="20a0bdb4-fa66-80db-95c0-f88cd27e0c8d"><td id="OFWA" class=""><strong>React</strong></td><td id="dWYB" class="">Framework JavaScript utilisé pour construire l’interface utilisateur (tableau de bord, cartes, etc.).</td></tr><tr id="20a0bdb4-fa66-8044-92dd-c07a96890b6d"><td id="OFWA" class=""><strong>Mapbox</strong></td><td id="dWYB" class="">Service de cartographie interactif utilisé pour afficher la position des valises.</td></tr><tr id="20a0bdb4-fa66-8075-9d7d-cb2cddc6c361"><td id="OFWA" class=""><strong>MongoDB</strong></td><td id="dWYB" class="">Base de données NoSQL utilisée pour stocker les données GPS et les informations utilisateurs.</td></tr><tr id="20a0bdb4-fa66-806b-b729-f3023e743723"><td id="OFWA" class=""><strong>Memcached</strong></td><td id="dWYB" class="">Système de cache en mémoire utilisé pour accélérer les requêtes côté API.</td></tr><tr id="20a0bdb4-fa66-80b1-94cd-f35abc6f93aa"><td id="OFWA" class=""><strong>CAT-M1</strong></td><td id="dWYB" class="">Technologie cellulaire IoT (LTE-M), adaptée aux objets connectés, faible consommation et latence modérée.</td></tr><tr id="20a0bdb4-fa66-8013-bae3-f00fd5672ca2"><td id="OFWA" class=""><strong>NB-IoT</strong></td><td id="dWYB" class="">Alternative à CAT-M1, plus économe mais moins adaptée aux transmissions fréquentes.</td></tr><tr id="20a0bdb4-fa66-8074-a6ed-fc0320faff6a"><td id="OFWA" class=""><strong>B2B</strong></td><td id="dWYB" class="">Business to Business : vente ou service à destination des entreprises.</td></tr><tr id="20a0bdb4-fa66-8086-a112-e21c3f19abae"><td id="OFWA" class=""><strong>B2C</strong></td><td id="dWYB" class="">Business to Consumer : vente ou service à destination des particuliers.</td></tr><tr id="20a0bdb4-fa66-80de-a28f-e141fc93e850"><td id="OFWA" class=""><strong>IMEI</strong></td><td id="dWYB" class="">Identifiant unique d’un appareil mobile, utilisé ici pour identifier chaque carte SIM7080G.</td></tr><tr id="20a0bdb4-fa66-8009-950b-e5b32c8e17fb"><td id="OFWA" class=""><strong>Pinggy</strong></td><td id="dWYB" class="">Service de tunnel TCP permettant de relayer des connexions de l’ESP32 vers un localhost en développement.</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Description générale</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🧭 Vue d’ensemble du système</summary><div class="indented"><p id="20a0bdb4-fa66-80e4-bf0c-fea84129dbbf" class="">Le système Shinkasen.dev repose sur une architecture orientée IoT, conçue pour suivre des valises en temps réel ou en différé. Il est composé de plusieurs briques :</p><ul id="20a0bdb4-fa66-8000-92f4-fafcde847838" class="bulleted-list"><li style="list-style-type:disc"><strong>ESP32 + SIM7080G</strong> : capte la position GPS grâce au module GNSS, encode les données en CBOR, puis les transmet via 4G (CAT-M1) au serveur.</li></ul><ul id="20a0bdb4-fa66-8094-adba-dbc8721c1778" class="bulleted-list"><li style="list-style-type:disc"><strong>Serveur TCP (Node.js)</strong> : reçoit les messages CBOR, les décode, et les stocke dans une base MongoDB.</li></ul><ul id="20a0bdb4-fa66-80e9-989e-c0ae986f8ed8" class="bulleted-list"><li style="list-style-type:disc"><strong>MongoDB</strong> : base de données centrale NoSQL, elle stocke les positions géographiques avec l’IMEI de l’appareil émetteur.</li></ul><ul id="20a0bdb4-fa66-800c-adc6-cf69a2811447" class="bulleted-list"><li style="list-style-type:disc"><strong>API Express.js</strong> : expose des endpoints REST pour que le front-end puisse récupérer les informations.</li></ul><ul id="20a0bdb4-fa66-8062-92bc-cac3d0503815" class="bulleted-list"><li style="list-style-type:disc"><strong>Memcached</strong> : permet de mettre en cache les réponses API fréquentes (ex : dernières positions).</li></ul><ul id="20a0bdb4-fa66-807d-87eb-d1c02da4289e" class="bulleted-list"><li style="list-style-type:disc"><strong>React + Mapbox</strong> : permet à l’utilisateur de visualiser les valises sur une carte interactive ainsi que des statistiques via des line charts.</li></ul><p id="20a0bdb4-fa66-8023-bd41-d4d14f788b4c" class=""><strong>📌 Important :</strong> Le serveur TCP et l’API Express sont <strong>indépendants</strong>. Ils n’interagissent pas directement : c’est la base de données qui sert de pont entre les deux.</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Architecture système</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20a0bdb4-fa66-809b-bfb7-d843676705d2" class="code"><code class="language-Mermaid">flowchart LR
+    subgraph IoT
+        ESP32[&quot;ESP32 + GNSS&quot;]
+        SIM7080G[&quot;SIM7080G (4G)&quot;]
+        CBOR[&quot;CBOR Encoder&quot;]
+    end
+    subgraph Réseau
+        Pinggy[&quot;Pinggy (Tunnel TCP)&quot;]
+    end
+    subgraph Backend
+        TCP[&quot;Serveur TCP (Node.js)&quot;]
+        DB[&quot;MongoDB&quot;]
+        API[&quot;API Express&quot;]
+        Cache[&quot;Memcached&quot;]
+    end
+    subgraph Frontend
+        React[&quot;React UI&quot;]
+        Mapbox[&quot;Carte Mapbox&quot;]
+        Charts[&quot;Line Charts&quot;]
+    end
+
+    ESP32 --&gt; CBOR --&gt; SIM7080G --&gt; Pinggy --&gt; TCP --&gt; DB
+    API --&gt;|Lecture/écriture| DB
+    API --&gt; Cache
+    React --&gt;|Requête API| API
+    React --&gt; Mapbox
+    React --&gt; Charts
+</code></pre><p id="20a0bdb4-fa66-8018-b332-fbac409fcfc6" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🙋‍♂️ Besoins utilisateurs</summary><div class="indented"><h3 id="20a0bdb4-fa66-8031-9077-df450db02dbc" class="">Partie commune :</h3><ul id="20a0bdb4-fa66-80f5-9e32-c4467c4cb862" class="bulleted-list"><li style="list-style-type:disc"><strong>Authentification (login / register)</strong></li></ul><ul id="20a0bdb4-fa66-8062-b543-d045d0c6ffda" class="bulleted-list"><li style="list-style-type:disc"><strong>Accès à un tableau de bord personnalisé</strong></li></ul><ul id="20a0bdb4-fa66-8043-b679-c76b93cfc044" class="bulleted-list"><li style="list-style-type:disc">Visualisation de :<ul id="20a0bdb4-fa66-80d8-bb5c-eccea4836f0c" class="bulleted-list"><li style="list-style-type:circle">la carte Mapbox avec valises en <strong>temps réel</strong> ou <strong>mode historique</strong></li></ul><ul id="20a0bdb4-fa66-80e9-a514-fd85a191012d" class="bulleted-list"><li style="list-style-type:circle">des <strong>statistiques</strong> (nombre de points collectés par jour, par appareil, etc.)</li></ul></li></ul><h3 id="20a0bdb4-fa66-80cc-a865-cbc53b32faaa" class="">Cas B2C (particulier) :</h3><ul id="20a0bdb4-fa66-8087-bc00-c59655e9671f" class="bulleted-list"><li style="list-style-type:disc">Consultation de ses propres valises</li></ul><ul id="20a0bdb4-fa66-80bd-845b-f7cc37bff9f1" class="bulleted-list"><li style="list-style-type:disc">Changement de la fréquence de transmission des données (si activé dans l’offre)</li></ul><h3 id="20a0bdb4-fa66-8032-b74c-f4135341dc39" class="">Cas B2B (entreprise) :</h3><ul id="20a0bdb4-fa66-80a0-abff-cd3816112837" class="bulleted-list"><li style="list-style-type:disc">Visualisation groupée de tous les dispositifs</li></ul><ul id="20a0bdb4-fa66-808f-a8a2-d29c479dd3f1" class="bulleted-list"><li style="list-style-type:disc">Accès à des dashboards consolidés</li></ul><ul id="20a0bdb4-fa66-80f1-8d90-cdd2583737c9" class="bulleted-list"><li style="list-style-type:disc">Possibilité d’offrir une interface d’administration interne (via une option dans l’offre)</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">⚙️ Contraintes générales</summary><div class="indented"><ul id="20a0bdb4-fa66-80d7-837e-f9a3aaf6fe00" class="bulleted-list"><li style="list-style-type:disc"><strong>Plateforme</strong> : dans un premier temps uniquement sur <strong>PC</strong>, via navigateur (Chrome, Firefox)</li></ul><ul id="20a0bdb4-fa66-8082-be77-dc9daa6f74a3" class="bulleted-list"><li style="list-style-type:disc"><strong>Extension mobile</strong> envisagée à moyen terme</li></ul><ul id="20a0bdb4-fa66-802b-8e51-e933c7713e9b" class="bulleted-list"><li style="list-style-type:disc"><strong>Partenariat futur avec Google Maps / Apple Maps</strong> : possible évolution du front-end</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">📜 RGPD &amp; CNIL</summary><div class="indented"><p id="20a0bdb4-fa66-80f9-b487-e97414fb0c1d" class="">Shinkasen.dev est soumis aux régulations européennes en matière de protection des données.</p><ul id="20a0bdb4-fa66-80a7-96fb-c2391f2af8e2" class="bulleted-list"><li style="list-style-type:disc">Les données de localisation sont considérées comme <strong>sensibles</strong>.</li></ul><ul id="20a0bdb4-fa66-80d5-9e3b-f2e1921d567d" class="bulleted-list"><li style="list-style-type:disc">Aucune donnée personnelle (nom, prénom, etc.) n’est collectée <strong>sans consentement explicite</strong>.</li></ul><ul id="20a0bdb4-fa66-8064-acbe-cdeffa6433c8" class="bulleted-list"><li style="list-style-type:disc">Les données sont <strong>stockées en France</strong> et ne sont accessibles qu’aux services autorisés.</li></ul></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Exigences fonctionnelles</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🧩 Fonctionnalités principales</summary><div class="indented"><h3 id="20a0bdb4-fa66-8062-9ecc-d4ba454c07aa" class="">📡 Côté IoT (ESP32 + SIM7080G)</h3><ul id="20a0bdb4-fa66-80d7-a8b9-e9f6e64fc185" class="bulleted-list"><li style="list-style-type:disc">Envoi de la position GNSS <strong>encodée en CBOR</strong> vers le serveur TCP via la puce 4G.</li></ul><ul id="20a0bdb4-fa66-80e0-b728-d42454001179" class="bulleted-list"><li style="list-style-type:disc">Fréquence de transmission <strong>modifiable à distance</strong> (via commande ou API).</li></ul><ul id="20a0bdb4-fa66-8050-95e8-fb991ea7f276" class="bulleted-list"><li style="list-style-type:disc">Fonctionnement en <strong>mode CAT-M1</strong>, plus rapide que NB-IoT, adapté à la mobilité.</li></ul><ul id="20a0bdb4-fa66-80e9-94fb-d18cc00b7d32" class="bulleted-list"><li style="list-style-type:disc">Utilisation des <strong>AT Commandes</strong> pour configurer et communiquer avec le réseau.</li></ul><ul id="20a0bdb4-fa66-80d2-b4fc-c262a2e10d5d" class="bulleted-list"><li style="list-style-type:disc">Implémentation de <strong>machines d’états en C++</strong> pour :<ul id="20a0bdb4-fa66-8011-9145-c514cb4be86b" class="bulleted-list"><li style="list-style-type:circle">Activer/désactiver GNSS</li></ul><ul id="20a0bdb4-fa66-80ce-bd31-f079a06a8ab6" class="bulleted-list"><li style="list-style-type:circle">Gérer la connectivité réseau</li></ul><ul id="20a0bdb4-fa66-80dc-8e79-e75f47578b73" class="bulleted-list"><li style="list-style-type:circle">Gérer les erreurs et relancer les séquences en cas d’échec</li></ul></li></ul><h3 id="20a0bdb4-fa66-804d-905c-d02cf41611e7" class="">🧠 Côté Serveur TCP</h3><ul id="20a0bdb4-fa66-8027-b0e6-e577aa89372e" class="bulleted-list"><li style="list-style-type:disc">Réception des paquets CBOR</li></ul><ul id="20a0bdb4-fa66-805b-8407-d04f56f152de" class="bulleted-list"><li style="list-style-type:disc">Décodage + vérification du format</li></ul><ul id="20a0bdb4-fa66-8001-aa78-c9136b142d07" class="bulleted-list"><li style="list-style-type:disc">Insertion dans la base MongoDB</li></ul><h3 id="20a0bdb4-fa66-80b9-bcdd-d8f7d6dd8ecb" class="">🔁 Côté API Express</h3><ul id="20a0bdb4-fa66-80e1-b473-dbc832386d55" class="bulleted-list"><li style="list-style-type:disc">Authentification (login, register)</li></ul><ul id="20a0bdb4-fa66-8003-b50f-c2342dd0d20b" class="bulleted-list"><li style="list-style-type:disc">Endpoints sécurisés pour :<ul id="20a0bdb4-fa66-807d-a7e0-c380f48a0114" class="bulleted-list"><li style="list-style-type:circle">Récupération des positions</li></ul><ul id="20a0bdb4-fa66-80d8-bf68-d0474b643149" class="bulleted-list"><li style="list-style-type:circle">Statistiques par jour / valise (IMEI)</li></ul><ul id="20a0bdb4-fa66-8090-a177-ca6185a0f280" class="bulleted-list"><li style="list-style-type:circle">Gestion de la fréquence d’envoi</li></ul></li></ul><ul id="20a0bdb4-fa66-80c9-be19-d2fa4a42aa57" class="bulleted-list"><li style="list-style-type:disc">Mise en cache Memcached pour les appels fréquents</li></ul><h3 id="20a0bdb4-fa66-80c5-9780-dbf5211190fc" class="">🖥️ Côté Frontend React</h3><ul id="20a0bdb4-fa66-807b-a942-f39c40a0874e" class="bulleted-list"><li style="list-style-type:disc">Interface responsive (PC)</li></ul><ul id="20a0bdb4-fa66-80e8-8e4f-f5de0d0d3cc3" class="bulleted-list"><li style="list-style-type:disc">Dashboard avec :<ul id="20a0bdb4-fa66-806e-a910-c09d0a292d0f" class="bulleted-list"><li style="list-style-type:circle">Carte Mapbox avec filtres : live / historique</li></ul><ul id="20a0bdb4-fa66-808f-a352-ee015e96c43d" class="bulleted-list"><li style="list-style-type:circle">Graphiques (line charts) des points collectés</li></ul><ul id="2140bdb4-fa66-8074-8778-e5b4fdab1a0f" class="bulleted-list"><li style="list-style-type:circle">Récupération des données toutes les minutes </li></ul></li></ul><p id="20a0bdb4-fa66-8064-b328-fe9f25d9d375" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">👥 Cas d’utilisation</summary><div class="indented"><h3 id="20a0bdb4-fa66-80fb-af70-d7123c4ee4cf" class="">👤 Utilisateur particulier (B2C)</h3><table id="20a0bdb4-fa66-80ad-b8ce-c0ca25b2726c" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80f5-8ea9-d89a41d3461e"><td id="QNAN" class="">Étape</td><td id="=MzG" class="">Description</td></tr><tr id="20a0bdb4-fa66-80d4-a4a7-dd2e91418e2d"><td id="QNAN" class="">1.</td><td id="=MzG" class="">L’utilisateur se connecte avec login/mot de passe</td></tr><tr id="20a0bdb4-fa66-8050-af86-cc52f90f9693"><td id="QNAN" class="">2.</td><td id="=MzG" class="">Il accède à son dashboard personnalisé</td></tr><tr id="20a0bdb4-fa66-8001-8420-f69afc2bb27f"><td id="QNAN" class="">3.</td><td id="=MzG" class="">Il visualise ses valises en temps réel (ou historique)</td></tr><tr id="20a0bdb4-fa66-8080-907b-c879ab7c9201"><td id="QNAN" class="">4.</td><td id="=MzG" class="">Il consulte les données collectées (nombre de points, fréquence, etc.)</td></tr><tr id="20a0bdb4-fa66-8046-b86f-f6ecd9339dba"><td id="QNAN" class="">5.</td><td id="=MzG" class="">Il ajuste la fréquence d’envoi s’il a souscrit à l’option</td></tr></tbody></table><h3 id="20a0bdb4-fa66-806c-b848-d96c5e59f8e1" class="">🧑‍💼 Utilisateur entreprise (B2B / Admin)</h3><ul id="20a0bdb4-fa66-804d-9669-d393cba879cd" class="bulleted-list"><li style="list-style-type:disc">Même parcours que le B2C avec des <strong>droits étendus</strong> :<ul id="20a0bdb4-fa66-804f-9e0e-f23b9c44f324" class="bulleted-list"><li style="list-style-type:circle">Visualisation <strong>multi-dispositifs</strong> par employé</li></ul><ul id="20a0bdb4-fa66-800b-bbba-e7e65c6da07d" class="bulleted-list"><li style="list-style-type:circle">Regroupement des données par utilisateur ou département</li></ul><ul id="20a0bdb4-fa66-804b-aa73-dd947bff1842" class="bulleted-list"><li style="list-style-type:circle"><strong>Modification des paramètres de plusieurs cartes</strong> à distance (via commandes CBOR ou autres)</li></ul></li></ul><p id="20a0bdb4-fa66-8083-be13-d432d9d61ff9" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🎬 Scénario d&#x27;utilisation bout en bout</summary><div class="indented"><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20a0bdb4-fa66-80df-ae1d-ca0d28d8e66a" class="code"><code class="language-Mermaid">sequenceDiagram
+    participant ESP32
+    participant GNSS
+    participant SIM7080G
+    participant TCP_Server
+    participant MongoDB
+    participant Express_API
+    participant React_UI
+
+    ESP32-&gt;&gt;GNSS: Activation
+    GNSS--&gt;&gt;ESP32: Coordonnées GPS
+    ESP32-&gt;&gt;GNSS: Extinction
+    ESP32-&gt;&gt;SIM7080G: AT Commandes (mode CAT-M1)
+    ESP32-&gt;&gt;TCP_Server: Envoi CBOR via Pinggy
+    TCP_Server-&gt;&gt;MongoDB: Stockage des données
+
+    React_UI-&gt;&gt;Express_API: Requête login
+    Express_API-&gt;&gt;MongoDB: Vérification user
+    MongoDB--&gt;&gt;Express_API: Résultat auth
+    Express_API--&gt;&gt;React_UI: Token + accès
+
+    React_UI-&gt;&gt;Express_API: Requêtes valises + stats
+    Express_API-&gt;&gt;Memcached: Cache (si disponible)
+    Express_API-&gt;&gt;MongoDB: Données GPS
+    MongoDB--&gt;&gt;Express_API: Coordonnées + stats
+    Express_API--&gt;&gt;React_UI: JSON réponse
+    React_UI-&gt;&gt;React_UI: Affichage sur carte et graphique
+</code></pre></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Exigences non fonctionnelles</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">⚡ Performance</summary><div class="indented"><table id="20a0bdb4-fa66-80c4-b77e-c91349daf130" class="simple-table"><tbody><tr id="20a0bdb4-fa66-8099-a99a-d640eaac9721"><td id="ua}y" class="">Critère</td><td id="]JOI" class="">Spécification</td></tr><tr id="20a0bdb4-fa66-80ba-a6dd-f7911a39de6b"><td id="ua}y" class=""><strong>Fréquence d’envoi</strong></td><td id="]JOI" class="">Toutes les 3 minutes par défaut, <strong>modifiable à distance</strong> (1 min / 10 min, etc.)</td></tr><tr id="20a0bdb4-fa66-80b1-99d7-e73156fcccff"><td id="ua}y" class=""><strong>Scalabilité</strong></td><td id="]JOI" class="">Prévu pour <strong>2 dispositifs</strong> au départ, avec montée à <strong>100</strong>, voire <strong>1000+</strong> pour les offres B2B</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🔐 Sécurité</summary><div class="indented"><table id="20a0bdb4-fa66-802a-a5d2-d7ee443d6b85" class="simple-table"><tbody><tr id="20a0bdb4-fa66-8040-a195-f133ce624720"><td id="KMnm" class="">Composant</td><td id="yyY?" class="">Niveau de sécurité actuel</td><td id="?iR`" class="">Évolutions prévues</td></tr><tr id="20a0bdb4-fa66-80e6-a235-cdf9809030b2"><td id="KMnm" class="">ESP32 → TCP</td><td id="yyY?" class="">Aucune sécurité pour l’instant (pas de chiffrement)</td><td id="?iR`" class="">Possible ajout de TLS/DTLS ou CBOR Web Token (CWT)</td></tr><tr id="20a0bdb4-fa66-80f8-ab48-fa0d50fc36f3"><td id="KMnm" class="">API Express</td><td id="yyY?" class="">Authentification gérée via Memcached pour stocker les sessions utilisateurs de manière temporaire, remplaçant ainsi la solution JWT initialement envisagée.</td><td id="?iR`" class="">• Mettre en place un système de refresh token pour prolonger automatiquement les sessions valides<br/>• Implémenter un mécanisme de déconnexion forcée en cas de détection d&#x27;activité suspecte<br/>• Ajouter une authentification à deux facteurs (2FA) pour renforcer la sécurité<br/></td></tr><tr id="20a0bdb4-fa66-8013-979d-d92b5ce3023f"><td id="KMnm" class="">Données</td><td id="yyY?" class="">Accès limité aux données selon les droits</td><td id="?iR`" class="">RGPD appliqué, données pseudonymisées</td></tr><tr id="20a0bdb4-fa66-8072-9478-edc2c4d0b20d"><td id="KMnm" class="">Base MongoDB</td><td id="yyY?" class="">Hébergement en France, accès sécurisé</td><td id="?iR`" class="">Règles strictes sur les rôles utilisateurs</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">♻️ Fiabilité</summary><div class="indented"><ul id="20a0bdb4-fa66-80bd-ad74-e00b19713768" class="bulleted-list"><li style="list-style-type:disc">L’ESP32 intègre des <strong>mécanismes de relance automatique</strong> si la transmission échoue (timeout, état “réessai” dans la machine d’état).</li></ul><ul id="20a0bdb4-fa66-80a0-a41e-d05a21658ff8" class="bulleted-list"><li style="list-style-type:disc">Les données sont <strong>temporairement mises en tampon</strong> en mémoire (dans la RAM de l’ESP32), avant d’être renvoyées.</li></ul></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🛠️ Maintenabilité</summary><div class="indented"><table id="20a0bdb4-fa66-8014-8a61-d7e82d6bc3a9" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80d1-8a96-ec219a66090e"><td id="&lt;\KM" class="">Élément</td><td id="BKAs" class="">Bonnes pratiques prévues</td></tr><tr id="20a0bdb4-fa66-808c-95a1-d76173aa8332"><td id="&lt;\KM" class="">Code ESP32</td><td id="BKAs" class="">Modulaire, commenté, structuré en <strong>modules réutilisables</strong> (<code>GNSS</code>, <code>4G</code>, <code>pipeline</code>)</td></tr><tr id="20a0bdb4-fa66-8031-8f26-f37bac51d10a"><td id="&lt;\KM" class="">Serveur TCP</td><td id="BKAs" class="">décodage CBOR séparé dans un module</td></tr><tr id="20a0bdb4-fa66-8010-a543-ff2eaf842004"><td id="&lt;\KM" class="">API Express</td><td id="BKAs" class="">Middleware, gestion des erreurs, documentation Swagger </td></tr><tr id="20a0bdb4-fa66-803f-a608-c1b3d587076b"><td id="&lt;\KM" class="">Frontend React</td><td id="BKAs" class="">Utilisation de composants réutilisables</td></tr><tr id="20a0bdb4-fa66-8073-9dfe-f19e5a8ea026"><td id="&lt;\KM" class="">Tests</td><td id="BKAs" class="">Tests unitaires sur chaque module de l’application embarquée, tests fonctionnels React, tests de charge à prévoir</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🔄 Compatibilité</summary><div class="indented"><table id="20a0bdb4-fa66-80d9-a5f8-fd14d19d195c" class="simple-table"><tbody><tr id="20a0bdb4-fa66-8021-b3a5-e40f0812511c"><td id="wQ|E" class="">Système</td><td id="cMq`" class="">Détail</td></tr><tr id="20a0bdb4-fa66-80fa-ae08-f9b14a243857"><td id="wQ|E" class="">Navigateurs</td><td id="cMq`" class="">Compatibilité Chrome / Firefox assurée (desktop uniquement pour l’instant)</td></tr><tr id="20a0bdb4-fa66-802c-8508-d74b0e2bb808"><td id="wQ|E" class="">Modules IoT</td><td id="cMq`" class="">Compatible avec tout module SIM7080G disposant d’un firmware à jour</td></tr><tr id="20a0bdb4-fa66-8065-985a-ca71cda34a34"><td id="wQ|E" class="">Plateformes Cloud</td><td id="cMq`" class="">Prévu pour être <strong>dockerisé</strong>, donc compatible avec <strong>Azure / OVH / AWS</strong></td></tr><tr id="20a0bdb4-fa66-8092-b677-d18d0fdeb4d7"><td id="wQ|E" class="">Évolutivité</td><td id="cMq`" class="">Possibilité d’intégrer d’autres types de capteurs (température, humidité) et formats (JSON, Protobuf)</td></tr></tbody></table></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Architecture technique</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🧱 Description de l’architecture globale</summary><div class="indented"><figure id="2140bdb4-fa66-804e-ad0d-cdd1d54c04f7" class="image"><a href="Diagramme_-_Relation_entre_les_applications_-_Projet_IoT.drawio_(1).png"><img style="width:710px" src="Diagramme_-_Relation_entre_les_applications_-_Projet_IoT.drawio_(1).png"/></a></figure><p id="20a0bdb4-fa66-80a9-b947-c136ae931812" class="">Le système est découpé en <strong>5 couches principales</strong> :</p><ol type="1" id="20a0bdb4-fa66-8051-9065-d42addff25fd" class="numbered-list" start="1"><li><strong>Matériel embarqué (ESP32 + SIM7080G + GNSS)</strong><p id="20a0bdb4-fa66-8058-86b7-c43df14c8d8c" class="">→ Acquisition et envoi des données</p></li></ol><ol type="1" id="20a0bdb4-fa66-8000-9504-c432e3344e63" class="numbered-list" start="2"><li><strong>Infrastructure de communication (Réseau 4G / Pinggy)</strong><p id="20a0bdb4-fa66-8053-a98d-f2c114f14e9f" class="">→ Acheminement vers le serveur local pendant la phase de développement</p></li></ol><ol type="1" id="20a0bdb4-fa66-8084-92c4-e2a2c62bac4a" class="numbered-list" start="3"><li><strong>Serveur TCP (Node.js)</strong><p id="20a0bdb4-fa66-805a-bc11-e28f829885e0" class="">→ Réception et décodage CBOR, stockage MongoDB</p></li></ol><ol type="1" id="20a0bdb4-fa66-8095-becc-dbf88053a585" class="numbered-list" start="4"><li><strong>API REST Express.js</strong><p id="20a0bdb4-fa66-80d9-a712-c59066082c52" class="">→ Serveur web exposant les données pour le front-end</p></li></ol><ol type="1" id="20a0bdb4-fa66-80a0-9c60-e6bb3b67f0cb" class="numbered-list" start="5"><li><strong>Interface utilisateur (React)</strong><p id="20a0bdb4-fa66-8010-b4c4-e624406ce11a" class="">→ Visualisation via Mapbox et charts, avec login et tableaux de bord</p></li></ol></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🖥️ Technologies et outils utilisés</summary><div class="indented"><table id="20a0bdb4-fa66-8036-b6b5-d2b240649ae3" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80da-b165-e0efd6a89ccf"><td id=";?j&gt;" class="">Côté</td><td id="kMZ]" class="">Technologies / Protocoles</td></tr><tr id="20a0bdb4-fa66-80f8-869b-c4a38140676c"><td id=";?j&gt;" class=""><strong>Microcontrôleur</strong></td><td id="kMZ]" class="">ESP32 (C++ avec PlatformIO)</td></tr><tr id="20a0bdb4-fa66-80a5-bb51-fba0b5aceb5b"><td id=";?j&gt;" class=""><strong>Modem cellulaire</strong></td><td id="kMZ]" class="">SIM7080G, protocole AT commandes, réseau CAT-M1</td></tr><tr id="20a0bdb4-fa66-8085-b5a0-df5793c863b3"><td id=";?j&gt;" class=""><strong>Encodage</strong></td><td id="kMZ]" class="">CBOR (Concise Binary Object Representation)</td></tr><tr id="20a0bdb4-fa66-80e1-a176-d3d375e01061"><td id=";?j&gt;" class=""><strong>Tunnel de dev</strong></td><td id="kMZ]" class="">Pinggy.io (TCP tunneling vers localhost)</td></tr><tr id="20a0bdb4-fa66-80eb-8b13-df79dfe9bd01"><td id=";?j&gt;" class=""><strong>Serveur TCP</strong></td><td id="kMZ]" class="">Node.js (<code>net</code>, <code>cbor</code>, <code>dotenv</code>, <code>mongodb</code>)</td></tr><tr id="20a0bdb4-fa66-8050-bf3a-d5730d8f5ee2"><td id=";?j&gt;" class=""><strong>Base de données</strong></td><td id="kMZ]" class="">MongoDB</td></tr><tr id="20a0bdb4-fa66-8057-a3d4-ec18a1cc9535"><td id=";?j&gt;" class=""><strong>Cache</strong></td><td id="kMZ]" class="">Memcached</td></tr><tr id="20a0bdb4-fa66-806a-a275-f2a8f522b0b2"><td id=";?j&gt;" class=""><strong>API Web</strong></td><td id="kMZ]" class="">Express.js, JWT Auth, REST</td></tr><tr id="20a0bdb4-fa66-8018-a6ee-e4116c638dcb"><td id=";?j&gt;" class=""><strong>Frontend</strong></td><td id="kMZ]" class="">React.js, Tailwind, Mapbox, ApexCharts</td></tr><tr id="20a0bdb4-fa66-80b7-a2d6-c7f4dc659d3b"><td id=";?j&gt;" class=""><strong>Containerisation</strong></td><td id="kMZ]" class="">Docker (serveur TCP, API, Mongo, Memcached)</td></tr><tr id="20a0bdb4-fa66-806c-a4c6-f8d0bb1e2990"><td id=";?j&gt;" class=""><strong>Déploiement cible (à venir)</strong></td><td id="kMZ]" class="">Cloud public (OVH, Azure, AWS – à définir)</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">📦 Conteneurisation Docker (prévue)</summary><div class="indented"><p id="20a0bdb4-fa66-8093-8d04-d84332dcd988" class=""> <strong>Dockeriser</strong> les services suivants :</p><ul id="20a0bdb4-fa66-8057-b91c-da1722b8a06a" class="bulleted-list"><li style="list-style-type:disc"><code>tcp-server</code> : port 4000</li></ul><ul id="20a0bdb4-fa66-804f-8c81-f611441a56b1" class="bulleted-list"><li style="list-style-type:disc"><code>api-server</code> : port 3000</li></ul><ul id="20a0bdb4-fa66-802b-934e-d4bab7efb76a" class="bulleted-list"><li style="list-style-type:disc"><code>mongo</code> : port 27017</li></ul><ul id="20a0bdb4-fa66-80d4-99c7-ddba024b6c67" class="bulleted-list"><li style="list-style-type:disc"><code>memcached</code> : port 11211</li></ul><p id="20a0bdb4-fa66-8018-b8cf-d39100a9d09f" class="">Cela permettra :</p><ul id="20a0bdb4-fa66-807e-a305-caad55e0b45d" class="bulleted-list"><li style="list-style-type:disc">Une <strong>installation simplifiée</strong></li></ul><ul id="20a0bdb4-fa66-8097-9698-da3f0e00f188" class="bulleted-list"><li style="list-style-type:disc">Des <strong>tests en local homogènes</strong></li></ul><ul id="20a0bdb4-fa66-805c-a77b-ca0b4d9895c8" class="bulleted-list"><li style="list-style-type:disc">Une base pour un futur <strong>CI/CD</strong> avec GitHub Actions ou Jenkins</li></ul><p id="20a0bdb4-fa66-80fe-962f-d5ccff145d5b" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">Tableau des ports et services exposés</summary><div class="indented"><table id="20a0bdb4-fa66-80b4-af15-d61aa7b84375" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80bd-8ed2-c71d2680b42e"><td id="{cGc" class="">Service</td><td id="Q&lt;EF" class="">Port</td><td id="xFaz" class="">Description</td></tr><tr id="20a0bdb4-fa66-8014-90cf-c4d8a9cea8f7"><td id="{cGc" class="">TCP Server</td><td id="Q&lt;EF" class="">4000</td><td id="xFaz" class="">Réception données CBOR</td></tr><tr id="20a0bdb4-fa66-801a-88bc-ee049ee02c9c"><td id="{cGc" class="">API Express</td><td id="Q&lt;EF" class="">3000</td><td id="xFaz" class="">Endpoints REST sécurisés</td></tr><tr id="20a0bdb4-fa66-806f-b2f5-f16d745768d6"><td id="{cGc" class="">MongoDB</td><td id="Q&lt;EF" class="">27017</td><td id="xFaz" class="">Stockage central</td></tr><tr id="20a0bdb4-fa66-80e8-a098-f597f47c63ec"><td id="{cGc" class="">Memcached</td><td id="Q&lt;EF" class="">11211</td><td id="xFaz" class="">Cache pour les données fréquentes</td></tr><tr id="20a0bdb4-fa66-802c-b3a4-e30dbf72a7fd"><td id="{cGc" class="">React</td><td id="Q&lt;EF" class="">5173</td><td id="xFaz" class="">Interface utilisateur</td></tr></tbody></table><p id="20a0bdb4-fa66-8011-b306-d3f2e99aaced" class="">
+</p></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Spécifications détaillées</summary><div class="indented"><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🧩 Spécifications des composants</summary><div class="indented"><h3 id="20a0bdb4-fa66-80b3-bcb2-d06fb20e5a51" class="">📦 Données CBOR</h3><p id="20a0bdb4-fa66-80d8-a784-e740694854e0" class="">Le message envoyé par l’ESP32 est un <strong>objet JSON encodé en CBOR</strong>, structuré ainsi :</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20a0bdb4-fa66-804e-a823-f8c0db5b5f60" class="code"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">
+{
+  &quot;imei&quot;: &quot;867123456789012&quot;,
+  &quot;lat&quot;: 48.8566,
+  &quot;lon&quot;: 2.3522,
+  &quot;timestamp&quot;: &quot;2025-06-06T10:00:00Z&quot;
+}
+
+</code></pre><p id="20a0bdb4-fa66-8019-953f-fdcaa7b085fb" class="">💡 D’autres champs pourraient être ajoutés selon les capteurs connectés (ex : température, humidité, choc…).</p><h3 id="20a0bdb4-fa66-80a1-82ab-dffb248d2133" class="">🔧 Format de stockage MongoDB</h3><p id="20a0bdb4-fa66-8017-affb-fb1c6220394a" class="">Chaque document dans MongoDB suit le schéma suivant :</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="20a0bdb4-fa66-808d-953a-ff59a8eeab11" class="code"><code class="language-JSON" style="white-space:pre-wrap;word-break:break-all">
+{
+  &quot;_id&quot;: ObjectId,
+  &quot;imei&quot;: &quot;867123456789012&quot;,
+  &quot;position&quot;: {
+    &quot;latitude&quot;: 48.8566,
+    &quot;longitude&quot;: 2.3522
+  },
+  &quot;receivedAt&quot;: ISODate(&quot;2025-06-06T10:00:00Z&quot;)
+}
+
+</code></pre><blockquote id="20a0bdb4-fa66-804f-aaeb-d20863e0d106" class="">Actuellement, la notion de valise n’est pas matérialisée, seul l’IMEI sert d’identifiant.<p id="20a0bdb4-fa66-8043-a934-e3138bf95358" class="">⚠️ Il sera pertinent d’introduire une <strong>collection </strong><code><strong>suitcases</strong></code><strong> liée à un utilisateur.</strong></p></blockquote></div></details><p id="20a0bdb4-fa66-8002-a1db-e2ceb873b8fd" class="">
+</p></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Plan de test et validation</summary><div class="indented"><h3 id="20a0bdb4-fa66-8096-b6de-ddf3a0546c30" class="">🧪 Stratégie de test globale</h3><p id="20a0bdb4-fa66-80ac-9a03-dfc74db52d70" class="">Le projet Shinkasen.dev nécessite des tests à plusieurs niveaux pour garantir fiabilité, sécurité et robustesse :</p><table id="20a0bdb4-fa66-8049-9cba-cb9858ac557f" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80bc-8093-c57fe815145d"><td id="[_ay" class="">Niveau</td><td id="gbqR" class="">Type de test</td><td id="QS&lt;d" class="">Objectif principal</td></tr><tr id="20a0bdb4-fa66-806d-902f-fe7f47eda5ce"><td id="[_ay" class="">ESP32 (embarqué)</td><td id="gbqR" class="">Tests manuels et unitaires</td><td id="QS&lt;d" class="">Vérifier la machine d’état, GNSS, envoi CBOR, etc.</td></tr><tr id="20a0bdb4-fa66-80ce-9b71-d0345a424f4e"><td id="[_ay" class="">Serveur TCP</td><td id="gbqR" class="">Tests d’intégration</td><td id="QS&lt;d" class="">Vérifier le décodage, les erreurs de format, les insertions MongoDB</td></tr><tr id="20a0bdb4-fa66-80b0-862e-ebb61fc174f8"><td id="[_ay" class="">API Express</td><td id="gbqR" class="">Tests unitaires + fonctionnels</td><td id="QS&lt;d" class="">Vérifier les endpoints (auth, GET valises, etc.)</td></tr><tr id="20a0bdb4-fa66-80c8-b43f-c0edaf0094e1"><td id="[_ay" class="">Frontend React</td><td id="gbqR" class="">Tests fonctionnels</td><td id="QS&lt;d" class="">Vérifier l’affichage des données, les graphiques, le login</td></tr><tr id="20a0bdb4-fa66-80f2-ac5a-cf862aa9de1f"><td id="[_ay" class="">Système complet</td><td id="gbqR" class="">Tests bout-en-bout (E2E)</td><td id="QS&lt;d" class="">Vérifier qu’un envoi GNSS apparaît bien côté carte UI</td></tr></tbody></table><h3 id="20a0bdb4-fa66-80b6-8dad-de48127ccf2f" class="">🧭 Scénarios de tests fonctionnels (React)</h3><table id="20a0bdb4-fa66-8083-9bed-ee4464cc4dad" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80eb-8fec-d73ff4794297"><td id="Vamq" class="">Scénario</td><td id="bnct" class="">Résultat attendu</td></tr><tr id="20a0bdb4-fa66-80a5-8391-cb5d86fb2dfe"><td id="Vamq" class="">Authentification utilisateur</td><td id="bnct" class="">Accès au dashboard avec son propre token</td></tr><tr id="20a0bdb4-fa66-80de-98b0-ea229495f1dc"><td id="Vamq" class="">Visualisation des données</td><td id="bnct" class="">Carte Mapbox + données valides + graphique dynamique</td></tr><tr id="20a0bdb4-fa66-806c-b915-e8237e91821d"><td id="Vamq" class="">Fréquence d’envoi modifiée</td><td id="bnct" class="">L’ESP32 adapte son comportement dans les 3 min suivantes</td></tr></tbody></table><h3 id="20a0bdb4-fa66-8068-97a3-c9493f76f091" class="">🟢 Critères d’acceptation</h3><table id="20a0bdb4-fa66-807b-86ec-ee80ddf8599f" class="simple-table"><tbody><tr id="20a0bdb4-fa66-807b-8e19-ecfaf8500cd1"><td id="{Tml" class="">Fonctionnalité</td><td id=";r&gt;f" class="">Critère de succès</td></tr><tr id="20a0bdb4-fa66-801b-b9ed-ffe36f6f19b5"><td id="{Tml" class="">Envoi de données CBOR</td><td id=";r&gt;f" class="">Donnée stockée dans MongoDB avec les bons champs</td></tr><tr id="20a0bdb4-fa66-80e9-9fbb-f8a611bb198e"><td id="{Tml" class="">Interface utilisateur complète</td><td id=";r&gt;f" class="">Carte, graphes et sidebar disponibles</td></tr><tr id="20a0bdb4-fa66-809b-9e77-f741c5a0ae67"><td id="{Tml" class="">Résilience de l’ESP32</td><td id=";r&gt;f" class="">En cas d’échec, une nouvelle tentative est effectuée</td></tr><tr id="20a0bdb4-fa66-80a7-9704-dade4146c9a5"><td id="{Tml" class="">API cache</td><td id=";r&gt;f" class="">Appels répétés renvoyés plus vite via Memcached</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Plan de déploiement</summary><div class="indented"><h3 id="20a0bdb4-fa66-8005-92eb-de6c7c09e73b" class="">🧭 Objectif</h3><p id="20a0bdb4-fa66-8042-8e03-f61dbf307c9b" class="">Déployer le système complet <strong>de manière progressive et modulaire</strong>, avec une stratégie adaptée aux besoins du POC puis à la montée en charge.</p><hr id="20a0bdb4-fa66-806a-ba61-f7b2806032c2"/><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">🛠️ Stratégie de déploiement (étapes)</summary><div class="indented"><table id="20a0bdb4-fa66-8071-a87f-f5da75d27a61" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80c5-ab18-ce281abf3512"><td id="\F:q" class="">Étape</td><td id="cDHA" class="">Objectif</td><td id="gFwM" class="">Environnement</td></tr><tr id="20a0bdb4-fa66-80a3-8129-e4f7e84df467"><td id="\F:q" class=""><strong>Local / Dev</strong></td><td id="cDHA" class="">Développement + test manuel de chaque brique</td><td id="gFwM" class="">Docker local + tunnel Pinggy</td></tr><tr id="20a0bdb4-fa66-8081-913e-f654b1cec93b"><td id="\F:q" class=""><strong>Pré-production (POC)</strong></td><td id="cDHA" class="">Démo pour encadrants ou partenaires B2B</td><td id="gFwM" class="">cloud léger (AWS/Azure)</td></tr><tr id="20a0bdb4-fa66-8059-abd5-c9f545ce3962"><td id="\F:q" class=""><strong>Production B2C/B2B</strong></td><td id="cDHA" class="">Accès public sécurisé avec hébergement cloud</td><td id="gFwM" class="">Docker full stack + domaine custom</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">📦 Conteneurisation (Docker)</summary><div class="indented"><p id="20a0bdb4-fa66-8033-9b7b-fdd0bab07a19" class="">Tu prévois de dockeriser :</p><table id="20a0bdb4-fa66-80e4-aad4-eff299a1f83e" class="simple-table"><tbody><tr id="20a0bdb4-fa66-809e-be0d-da1eb51d09f1"><td id="KSP=" class="">Conteneur</td><td id="WcBT" class="">Rôle</td><td id="|`Ot" class="">Port exposé</td><td id="&lt;E;l" class="">Dockerfile ?</td></tr><tr id="20a0bdb4-fa66-8077-a9be-fae48b6a6841"><td id="KSP=" class=""><code>tcp-server</code></td><td id="WcBT" class="">Réception des données CBOR</td><td id="|`Ot" class="">4000</td><td id="&lt;E;l" class="">✅</td></tr><tr id="20a0bdb4-fa66-8040-95bb-d3a0803184fc"><td id="KSP=" class=""><code>api-server</code></td><td id="WcBT" class="">Express.js avec JWT &amp; Memcached</td><td id="|`Ot" class="">3000</td><td id="&lt;E;l" class="">✅</td></tr><tr id="20a0bdb4-fa66-8077-b029-edc3c965ecc3"><td id="KSP=" class=""><code>mongo-iot</code></td><td id="WcBT" class="">Base MongoDB</td><td id="|`Ot" class="">27017</td><td id="&lt;E;l" class="">image officielle</td></tr><tr id="20a0bdb4-fa66-808f-b44e-e41fe537e16b"><td id="KSP=" class=""><code>memcached</code></td><td id="WcBT" class="">Cache en mémoire</td><td id="|`Ot" class="">11211</td><td id="&lt;E;l" class="">image officielle</td></tr><tr id="20a0bdb4-fa66-805d-97c2-d82d3e5a496a"><td id="KSP=" class=""><code>react-app</code></td><td id="WcBT" class="">Interface utilisateur (option : nginx)</td><td id="|`Ot" class="">5173</td><td id="&lt;E;l" class="">✅</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">☁️ Déploiement cloud envisagé</summary><div class="indented"><table id="20a0bdb4-fa66-8066-ad10-d1c0dc276ca0" class="simple-table"><tbody><tr id="20a0bdb4-fa66-80dc-8168-f9716db54fcb"><td id="D`;V" class="">Service</td><td id="gAo?" class="">Fournisseur(s) recommandés</td></tr><tr id="20a0bdb4-fa66-805b-8986-d55297488fcd"><td id="D`;V" class=""><strong>TCP / API</strong></td><td id="gAo?" class="">Azure Container App</td></tr><tr id="20a0bdb4-fa66-80d2-8888-ff1169426155"><td id="D`;V" class=""><strong>MongoDB</strong></td><td id="gAo?" class="">MongoDB Atlas (hébergement FR ou EU)</td></tr><tr id="20a0bdb4-fa66-8089-9c2c-dd1bbeac64aa"><td id="D`;V" class=""><strong>React UI</strong></td><td id="gAo?" class="">AWS</td></tr><tr id="20a0bdb4-fa66-805f-a646-c8180bb0fa76"><td id="D`;V" class=""><strong>Nom de domaine</strong></td><td id="gAo?" class="">OVH, Gandi, Cloudflare</td></tr><tr id="20a0bdb4-fa66-80be-bbc4-edce5bdc8b29"><td id="D`;V" class=""><strong>HTTPS</strong></td><td id="gAo?" class="">Let’s Encrypt via certbot/NGINX</td></tr></tbody></table></div></details><details open=""><summary style="font-weight:600;font-size:1.25em;line-height:1.3;margin:0">👨‍🏫 Formation et documentation</summary><div class="indented"><ul id="20a0bdb4-fa66-80bc-b796-f88b92f26394" class="bulleted-list"><li style="list-style-type:disc">🧾 Création d’un <strong>README.md</strong> pour chaque composant</li></ul><ul id="20a0bdb4-fa66-8077-a1b6-e49f010efbb0" class="bulleted-list"><li style="list-style-type:disc">📘 Documentation Swagger pour l’API</li></ul><ul id="20a0bdb4-fa66-80b6-b6e6-c7f225d9ebf3" class="bulleted-list"><li style="list-style-type:disc">🎥 Possibilité de tourner une <strong>vidéo de démonstration</strong></li></ul></div></details></div></details><details open=""><summary style="font-weight:600;font-size:1.5em;line-height:1.3;margin:0">Gestion de projet</summary><div class="indented"><h3 id="20a0bdb4-fa66-80e7-922f-cfab9a72c1a4" class="">🛑 Gestion des risques</h3><table id="20a0bdb4-fa66-807e-a361-ecf49c24c138" class="simple-table"><tbody><tr id="20a0bdb4-fa66-8072-863b-d4c7008d6616"><td id="CwO`" class="">Risque identifié</td><td id="m[uU" class="">Plan de mitigation</td></tr><tr id="20a0bdb4-fa66-802c-a940-fb43bc1c3035"><td id="CwO`" class="">🔌 <strong>Perte de connectivité 4G</strong></td><td id="m[uU" class="">Retry automatique + logs + timeout sur l’ESP32</td></tr><tr id="20a0bdb4-fa66-80e2-b08f-e020542fc7bb"><td id="CwO`" class="">📉 <strong>Données perdues ou mal envoyées</strong></td><td id="m[uU" class="">Validation CBOR + schéma + backups MongoDB</td></tr><tr id="20a0bdb4-fa66-8058-9ba3-d80c424c7a51"><td id="CwO`" class="">🧱 <strong>Charge serveur élevée (B2B)</strong></td><td id="m[uU" class="">Cache via Memcached</td></tr><tr id="20a0bdb4-fa66-80d7-9416-d42f2a1d995a"><td id="CwO`" class="">🔒 <strong>Problème de sécurité ou faille API</strong></td><td id="m[uU" class="">Authentification JWT, validation des entrées, tests de sécurité</td></tr><tr id="20a0bdb4-fa66-8042-8dd7-caa0c2403032"><td id="CwO`" class="">🕒 <strong>Retard dans le dev React ou déploiement</strong></td><td id="m[uU" class="">Répartir le focus / aider ponctuellement entre coéquipiers</td></tr><tr id="20a0bdb4-fa66-8029-9750-d338f418222d"><td id="CwO`" class="">⚠️ <strong>Puce SIM ou GNSS défectueuse</strong></td><td id="m[uU" class="">Avoir un second module pour basculer rapidement</td></tr></tbody></table><hr id="20a0bdb4-fa66-8025-bb18-e620cae129d1"/><h3 id="20a0bdb4-fa66-8049-8676-ceaf5a75b878" class="">📋 Suivi et méthodes</h3><ul id="20a0bdb4-fa66-8021-b647-d9e71f0b7c3e" class="bulleted-list"><li style="list-style-type:disc">🔁 Méthode agile : avancement par blocs fonctionnels avec itérations rapides</li></ul><ul id="20a0bdb4-fa66-80b5-909f-c5eebfdbc0fb" class="bulleted-list"><li style="list-style-type:disc">🧪 Validation par tests unitaires </li></ul><ul id="20a0bdb4-fa66-8088-a9cf-f30f3c0b13e2" class="bulleted-list"><li style="list-style-type:disc">✅ JIRA</li></ul></div></details><p id="2140bdb4-fa66-80a6-85d5-d607be38cbda" class="">
+</p><figure id="2140bdb4-fa66-8079-a5ac-c2b92bed82f9" class="image"><a href="Capture_decran_2025-05-14_a_14.12.55.png"><img style="width:2880px" src="Capture_decran_2025-05-14_a_14.12.55.png"/></a></figure><p id="2140bdb4-fa66-80fc-8b76-c20a923eee0f" class="">
+</p><p id="2140bdb4-fa66-8099-9e45-e70ec4664d82" class="">
+</p></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>

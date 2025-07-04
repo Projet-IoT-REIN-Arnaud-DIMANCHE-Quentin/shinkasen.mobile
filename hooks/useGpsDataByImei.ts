@@ -7,28 +7,34 @@ export const useGpsDataByImei = (imei: string) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
-    useEffect(() => {
+    const fetchGpsData = async (showLoader = true) => {
         if (!imei) return;
+        if (showLoader) setLoading(true);
+        setError(null);
 
-        const fetchGpsData = async () => {
-            setLoading(true);
-            setError(null);
+        try {
+            const response: GpsData[] = await apiFetch(`/gps/${imei}`, {}, true);
+            const sorted = response.sort((a, b) =>
+                new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+            );
+            setData(sorted);
+        } catch (err: any) {
+            setError(err);
+        } finally {
+            if (showLoader) setLoading(false);
+        }
+    };
 
-            try {
-                const response: GpsData[] = await apiFetch(`/gps/${imei}`, {}, true);
-                const sorted = response.sort((a, b) =>
-                    new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
-                );
-                setData(sorted);
-            } catch (err: any) {
-                setError(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-
+    useEffect(() => {
         fetchGpsData();
     }, [imei]);
 
-    return { data, loading, error };
+    return {
+        data,
+        loading,
+        error,
+        refetch: () => fetchGpsData(true),         
+        refreshSilently: () => fetchGpsData(false) 
+    };
 };
+

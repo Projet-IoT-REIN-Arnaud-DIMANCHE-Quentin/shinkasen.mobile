@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shinkasen.dev - Idée Projet IoT Mobile</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f7fa;
+            color: #333
+        }
+
+        header {
+            background: linear-gradient(135deg, #00b4d8, #0077b6);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.5em
+        }
+
+        section {
+            max-width: 900px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1)
+        }
+
+        h2 {
+            color: #0077b6
+        }
+
+        ul {
+            padding-left: 20px
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px
+        }
+
+        .card {
+            background: #e0f7fa;
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08)
+        }
+
+        .persona {
+            display: flex;
+            align-items: center;
+            gap: 15px
+        }
+
+        .persona img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px
+        }
+
+        .tag {
+            background: #00b4d8;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.85em;
+            margin-right: 5px
+        }
+    </style>
+</head>
+
+<body>
+    <header>Shinkasen.dev - Idée Projet IoT Mobile</header>
+    <section>
+        <h2>Idée</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Brainstorming</h3>
+                <ul>
+                    <li>Traçage objets sensibles</li>
+                    <li>Alerte perte/vol</li>
+                    <li>Suivi en temps réel</li>
+                    <li>Notifications mouvement</li>
+                    <li>Optimisation batterie</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Sous-problèmes</h3>
+                <ul>
+                    <li>Perte/vol coûteux</li>
+                    <li>Incertitude localisation</li>
+                    <li>Transmission fiable</li>
+                    <li>Consommation énergie</li>
+                    <li>Protection données</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Problème / Solution</h3>
+                <ul>
+                    <li>Perte ➔ Dispositif GNSS + 4G</li>
+                    <li>Inquiétude ➔ Notification live</li>
+                    <li>Transmission ➔ TCP fiable</li>
+                    <li>Consommation ➔ Ajustement fréquence</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2>Concurrence</h2>
+        <p><span class="tag">Concurrents :</span> Tile, AirTag, Samsung SmartTag, Tracki, Invoxia</p>
+        <p><span class="tag">Positionnement :</span> GNSS + 4G, Live tracking, RGPD, Dashboard B2B/B2C</p>
+    </section>
+    <section>
+        <h2>Marché</h2>
+        <ul>
+            <li>Marché des objets perdus : <strong>18,4 Mds €/an</strong></li>
+            <li>Marché IoT tracking en croissance (+12%/an Europe)</li>
+            <li>Cible B2C : voyageurs fréquents, musiciens, photographes</li>
+            <li>Cible B2B : entreprises transport, assurances, logistique premium</li>
+            <li>Potentiel extension : capteurs température, humidité, chocs</li>
+            <li>Opportunités dans le marché de la logistique intelligente</li>
+            <li>Tendance post-COVID : sécurisation des biens et voyages plus sereins</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Business Model</h2>
+        <ul>
+            <li>Vente d'appareils IoT (50-80€ selon options GNSS/4G)</li>
+            <li>Abonnement B2C : 2,99-6,99€/mois pour tracking live et historique</li>
+            <li>Abonnement B2B : 5-20€/dispositif/mois avec gestion flotte</li>
+            <li>Upsell premium : extension mondiale, rapport analytique</li>
+            <li>Partenariats assurances et gestion aéroportuaire</li>
+            <li>Ventes de données anonymisées pour optimiser flux (option B2B)</li>
+            <li>Offres packs entreprise avec support prioritaire</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Persona</h2>
+        <div class="persona"><img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Brad_Pitt-69858.jpg/330px-Brad_Pitt-69858.jpg"
+                alt="Olivier Dubois">
+            <div><strong>Olivier Dubois</strong><br>35 ans, Responsable commercial CSP+<br>Voyageur régulier,
+                technophile<br>Objectif : voyager sereinement sans perte<br>Frustration : crainte perte bagage à chaque
+                déplacement</div>
+        </div>
+    </section>
+    <section>
+        <h2>Design & Prototype</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>🎨 Interface Mobile</h3>
+                <p>Prototype interactif de l'application mobile Shinkasen</p>
+                <a href="https://www.figma.com/design/JD1XxPIhUUtmcFtbpN31dW/Projet-mobile---Mast%C3%A8re-IoT?node-id=8-6&t=UgpehkrXivuS6Aab-1"
+                    target="_blank" style="display: inline-block; background: #0077b6; color: white; padding: 10px 20px; 
+                          text-decoration: none; border-radius: 6px; margin-top: 10px;">
+                    📱 Voir le prototype Figma
+                </a>
+            </div>
+            <div class="card">
+                <h3>📋 Wireframes</h3>
+                <ul>
+                    <li>Écran de connexion & onboarding</li>
+                    <li>Dashboard principal avec carte</li>
+                    <li>Liste des appareils connectés</li>
+                    <li>Détail d'un appareil + contrôles</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>

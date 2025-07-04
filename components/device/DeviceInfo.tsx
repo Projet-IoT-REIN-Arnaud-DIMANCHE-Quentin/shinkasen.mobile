@@ -4,11 +4,11 @@ import { Text, View } from 'react-native';
 
 type Props = Device;
 
-export const DeviceInfo: React.FC<Props> = ({ name, status }) => {
+export const DeviceInfo: React.FC<Props> = ({ name, state }) => {
     const statusColor =
-        status === 'online'
+        state === 'on'
             ? 'text-green-500'
-            : status === 'offline'
+            : state === 'off'
                 ? 'text-gray-400'
                 : 'text-red-500';
 
@@ -18,7 +18,7 @@ export const DeviceInfo: React.FC<Props> = ({ name, status }) => {
                 {name}
             </Text>
             <Text className={`text-sm tracking-wide uppercase font-medium ${statusColor}`}>
-                {status === 'online' ? 'Connecté' : status === 'offline' ? 'Déconnecté' : 'Erreur'}
+                {state === 'on' ? 'Connecté' : state === 'off' ? 'Déconnecté' : 'Erreur'}
             </Text>
         </View>
     );
