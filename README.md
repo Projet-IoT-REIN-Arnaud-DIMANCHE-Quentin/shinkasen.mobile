@@ -1,54 +1,70 @@
-<<<<<<< HEAD
-# shinkasen.mobile
-=======
-# Welcome to your Expo app 👋
+# Shinkasen Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Application mobile de tracking GPS développée avec Expo et React Native.
 
-## Get started
+> 📋 **Note** : Le fichier [`idea-project.html`](idea-project.html) contient l'idée complète du projet avec le business model et les personas.
 
-1. Install dependencies
+## Prérequis
 
+### SDK Android
+- Télécharger et installer **Android SDK 33** (API Level 33)
+- Configurer les variables d'environnement Windows :
+  - `ANDROID_HOME` : Chemin vers le SDK Android
+  - `ANDROID_SDK_ROOT` : Chemin vers le SDK Android
+  - Ajouter `%ANDROID_HOME%\platform-tools` au PATH
+
+### Google Maps API
+- Obtenir une clé API Google Maps depuis [Google Cloud Console](https://console.cloud.google.com/)
+- Activer l'API "Maps SDK for Android"
+- Configurer la clé dans votre projet
+
+## Installation
+
+1. Installer les dépendances :
    ```bash
    npm install
    ```
 
-2. Start the app
-
+2. Nettoyer et préparer le build :
    ```bash
-   npx expo start
+   npx expo prebuild --clean
    ```
 
-In the output, you'll find options to open the app in a
+3. Lancer le build Android :
+   ```bash
+   npx expo run:android
+   ```
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## Développement
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
+Pour démarrer le serveur de développement :
 ```bash
-npm run reset-project
+npx expo start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Options disponibles :
+- [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go)
 
-## Learn more
+## Structure du projet
 
-To learn more about developing your project with Expo, look at the following resources:
+Ce projet utilise [file-based routing](https://docs.expo.dev/router/introduction) avec Expo Router.
+Les fichiers principaux se trouvent dans le répertoire **app**.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Ressources
 
-## Join the community
+### Documentation
+- [Documentation Expo Maps](https://docs.expo.dev/versions/latest/sdk/maps/#setcamerapositionconfig)
+- [Documentation Expo](https://docs.expo.dev/)
+- [Guides Expo](https://docs.expo.dev/guides)
 
-Join our community of developers creating universal apps.
+### Tutoriels
+- [Tutoriel vidéo - Configuration Google Maps](https://www.youtube.com/watch?v=jDCuaIQ9vd0&t=309s)
+- [Tutoriel Expo officiel](https://docs.expo.dev/tutorial/introduction/)
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
->>>>>>> 75718b7 (Initial commit)
+## Communauté
+
+- [Expo sur GitHub](https://github.com/expo/expo)
+- [Discord Expo](https://chat.expo.dev)
