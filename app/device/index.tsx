@@ -1,9 +1,10 @@
 import { DeviceFilterModal } from '@/components/device/DeviceFilterModal';
 import { DeviceSearchBar } from '@/components/device/DeviceSearchBar';
 import { useDevicesFromGps } from '@/hooks/useDevicesFromGps';
+import { useFocusEffect } from '@react-navigation/native';
 import { useRouter } from 'expo-router';
 import { Filter } from 'lucide-react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -14,14 +15,22 @@ import {
 
 export default function DeviceListScreen() {
   const router = useRouter();
-  const [filter, setFilter] = useState<'all' | 'online' | 'offline'>('all');
+  const [filter, setFilter] = useState<'all' | 'on' | 'off'>('all');
   const [showModal, setShowModal] = useState(false);
   const [search, setSearch] = useState('');
 
-  const { devices, loading, error } = useDevicesFromGps();
+  const { devices, loading, error, refetch } = useDevicesFromGps();
+
+  // ✅ Refetch automatique à chaque retour sur la page
+  useFocusEffect(
+    useCallback(() => {
+      console.log("🔄 DeviceListScreen reprend le focus, actualisation...");
+      refetch();
+    }, [])
+  );
 
   const filteredDevices = devices
-    .filter((d) => filter === 'all' || d.status === filter)
+    .filter((d) => filter === 'all' || d.state === filter)
     .filter((d) => d.id.includes(search));
 
   if (loading)
@@ -81,10 +90,9 @@ export default function DeviceListScreen() {
               </Text>
             )}
             <Text
-              className={`text-xs mt-1 ${item.status === 'online' ? 'text-green-500' : 'text-gray-400'
-                }`}
+              className={`text-xs mt-1 ${item.state === 'on' ? 'text-green-500' : 'text-gray-400'}`}
             >
-              {item.status === 'online' ? 'Connecté' : 'Déconnecté'}
+              {item.state === 'on' ? 'Connecté' : 'Déconnecté'}
             </Text>
           </Pressable>
         )}

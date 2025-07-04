@@ -25,6 +25,7 @@ export default function RootLayout() {
       console.log('[AUTH] Vérification du token en cours...');
       const token = await AsyncStorage.getItem('jwt');
       if (token) {
+
         try {
           await fetchUser();
         } catch (e) {
