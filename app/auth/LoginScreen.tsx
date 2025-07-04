@@ -1,6 +1,7 @@
 import InputField from "@/components/form/InputField";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
@@ -42,9 +43,16 @@ export default function LoginScreen() {
   const goToRegister = () => router.push("/auth/RegisterScreen");
 
   return (
-    <View className="flex-1 justify-center bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 px-4">
+    <LinearGradient
+      colors={["#4F46E5", "#8B5CF6", "#EC4899"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1, paddingHorizontal: 16, justifyContent: "center" }}
+    >
       <View className="w-full max-w-md mx-auto rounded-3xl bg-white/90 dark:bg-zinc-900/90 p-8 shadow-2xl space-y-6">
-        <Text className="text-3xl font-bold text-center text-black dark:text-white">Connexion</Text>
+        <Text className="text-3xl font-bold text-center text-black dark:text-white">
+          Connexion
+        </Text>
 
         <InputField
           label="Email"
@@ -71,6 +79,6 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 }

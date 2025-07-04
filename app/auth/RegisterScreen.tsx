@@ -1,6 +1,7 @@
 import InputField from "@/components/form/InputField";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
+import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
@@ -29,7 +30,10 @@ export default function RegisterScreen() {
 
     if (!validEmail) setEmailError("Veuillez entrer une adresse email valide.");
     if (!validPassword)
-      setPasswordError("Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial.");
+      setPasswordError(
+        "Le mot de passe doit contenir au moins 8 caractères, une majuscule, un chiffre et un caractère spécial."
+      );
+
     if (!validEmail || !validPassword) {
       setRegistering(false);
       return;
@@ -38,22 +42,31 @@ export default function RegisterScreen() {
     try {
       await register(email, password);
       Alert.alert("Succès", "Compte créé avec succès !");
-    } catch (e: any) {
-      Alert.alert("Erreur d'inscription", e?.message || "Erreur inconnue");
+    } catch (e) {
+      console.error(e);
     } finally {
       setRegistering(false);
     }
   };
 
   return (
-    <View className="flex-1 justify-center bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 px-4">
+    <LinearGradient
+      colors={["#4F46E5", "#8B5CF6", "#EC4899"]}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1, paddingHorizontal: 16, justifyContent: "center" }}
+    >
       <View className="w-full max-w-md mx-auto rounded-3xl bg-white/90 dark:bg-zinc-900/90 p-8 shadow-2xl space-y-6">
-        <Text className="text-3xl font-bold text-center text-black dark:text-white">Créer un compte</Text>
+        <Text className="text-3xl font-bold text-center text-black dark:text-white">
+          Créer un compte
+        </Text>
 
         <InputField
           label="Email"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+          }}
           autoCapitalize="none"
           keyboardType="email-address"
           placeholder="Entrez votre email"
@@ -63,18 +76,29 @@ export default function RegisterScreen() {
         <InputField
           label="Mot de passe"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => {
+            setPassword(text);
+          }}
           secureTextEntry
           placeholder="Entrez votre mot de passe"
           error={passwordError}
         />
 
-        <Button title="S'inscrire" onPress={handleRegister} loading={loading || registering} />
+        <Button
+          title="S'inscrire"
+          onPress={handleRegister}
+          loading={loading || registering}
+        />
 
-        <TouchableOpacity onPress={() => router.push("/auth/LoginScreen")} className="pt-2">
-          <Text className="text-center text-base text-indigo-600 font-medium">Déjà un compte ? Se connecter</Text>
+        <TouchableOpacity
+          onPress={() => router.push("/auth/LoginScreen")}
+          className="pt-2"
+        >
+          <Text className="text-center text-base text-indigo-600 font-medium">
+            Déjà un compte ? Se connecter
+          </Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </LinearGradient>
   );
 }
