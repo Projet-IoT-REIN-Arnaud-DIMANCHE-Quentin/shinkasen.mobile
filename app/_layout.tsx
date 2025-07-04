@@ -28,12 +28,9 @@ export default function RootLayout() {
 
         try {
           await fetchUser();
-
         } catch (e) {
-
         }
       } else {
-
       }
       setAuthChecked(true);
     };
@@ -46,14 +43,9 @@ export default function RootLayout() {
 
     const isInAuth = pathname?.startsWith('/auth');
 
-
-
-
     if (!user && !isInAuth) {
-
       router.replace('/auth/LoginScreen');
     } else if (user && isInAuth) {
-
       router.replace('/');
     }
   }, [authChecked, user, pathname]);
@@ -66,7 +58,6 @@ export default function RootLayout() {
       </View>
     );
   }
-
 
   return (
     <>

@@ -2,7 +2,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Stack } from "expo-router";
 import React from "react";
 
-
 export default function AuthLayout() {
     return (
         <LinearGradient
