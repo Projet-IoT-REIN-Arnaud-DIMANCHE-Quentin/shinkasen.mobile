@@ -58,6 +58,11 @@ Application mobile de tracking GPS développée avec Expo et React Native.
    npx expo run:android
    ```
 
+4. Lancer le build iOS :
+   ```bash
+   npx expo run:ios
+   ```
+
 ## Développement
 
 Pour démarrer le serveur de développement :
