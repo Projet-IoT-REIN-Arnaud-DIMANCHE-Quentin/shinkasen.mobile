@@ -1,5 +1,5 @@
-import { SearchBar } from '@/components/ui/SearchBar';
 import React from 'react';
+import SearchBar from '../ui/SearchBar';
 
 type Props = {
     value: string;

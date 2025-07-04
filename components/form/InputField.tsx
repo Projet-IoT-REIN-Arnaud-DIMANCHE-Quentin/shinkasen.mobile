@@ -4,6 +4,7 @@ import { Text, TextInput, TextInputProps, View } from "react-native";
 type Props = TextInputProps & {
   label: string;
   error?: string;
+  testID?: string; 
 };
 
 export default function InputField({ label, error, ...props }: Props) {
@@ -11,12 +12,13 @@ export default function InputField({ label, error, ...props }: Props) {
 
   return (
     <View className="mb-4">
-      <Text className="text-base mb-2 text-label font-semibold">
-        {label}
-      </Text>
+      <Text className="text-base mb-2 text-label font-semibold">{label}</Text>
 
       <TextInput
         ref={inputRef}
+        placeholder={props.placeholder}
+        placeholderTextColor="#aaa"
+        accessibilityLabel={label}
         className={[
           "rounded-xl px-4 py-3 bg-white dark:bg-zinc-800 text-base text-black border",
           error
@@ -24,10 +26,8 @@ export default function InputField({ label, error, ...props }: Props) {
             : "border-gray-300 focus:border-primary",
           "transition-colors duration-150",
         ].join(" ")}
-        placeholderTextColor="#aaa"
-        accessibilityLabel={label}
         accessible
-        {...props}
+        {...props} 
       />
 
       {error && (

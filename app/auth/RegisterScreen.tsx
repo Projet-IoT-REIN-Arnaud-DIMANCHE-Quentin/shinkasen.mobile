@@ -42,8 +42,9 @@ export default function RegisterScreen() {
     try {
       await register(email, password);
       Alert.alert("Succès", "Compte créé avec succès !");
-    } catch (e) {
+    } catch (e: any) {
       console.error(e);
+      Alert.alert("Erreur d'inscription", e?.message || 'Une erreur est survenue.');
     } finally {
       setRegistering(false);
     }
@@ -64,24 +65,22 @@ export default function RegisterScreen() {
         <InputField
           label="Email"
           value={email}
-          onChangeText={(text) => {
-            setEmail(text);
-          }}
+          onChangeText={setEmail}
           autoCapitalize="none"
           keyboardType="email-address"
           placeholder="Entrez votre email"
           error={emailError}
+          testID="input-email"
         />
 
         <InputField
           label="Mot de passe"
           value={password}
-          onChangeText={(text) => {
-            setPassword(text);
-          }}
+          onChangeText={setPassword}
           secureTextEntry
           placeholder="Entrez votre mot de passe"
           error={passwordError}
+          testID="input-password"
         />
 
         <Button
